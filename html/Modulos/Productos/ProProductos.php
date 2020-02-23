@@ -12,7 +12,7 @@ switch ($_GET['accion']) {
                                                  cat.varDescripcion as descripcioncategoria,
                                                  pro.dobPrecio as precio
                                               from tCatProducto as pro
-                                              join tCatCategoriaProducto as cat on cat.intCategoriaProducto=pro.intProducto");
+                                              join tCatCategoriaProducto as cat on cat.intCategoriaProducto=pro.intCategoriaProducto");
         $resultado = mysqli_fetch_all($respuesta, MYSQLI_ASSOC);
         echo json_encode($resultado);
         break;
@@ -21,7 +21,7 @@ switch ($_GET['accion']) {
         echo json_encode($respuesta);
         break;
     case 'recuperar':
-        $respuesta = mysqli_query($conexion, "select intProducto, varDescripcion, dobPrecio, intCategoriaProducto from tCatProducto where intProducto=$_POST[codigo]");
+        $respuesta = mysqli_query($conexion, "select intProducto as codigo, varDescripcion as descripcion, dobPrecio as precio, intCategoriaProducto as codigocategoria from tCatProducto where intProducto=$_POST[codigo]");
         $resultado = mysqli_fetch_all($respuesta, MYSQLI_ASSOC);
         echo json_encode($resultado);
         break;
@@ -34,7 +34,7 @@ switch ($_GET['accion']) {
         echo json_encode($respuesta);
         break;
     case 'listarcategorias':
-        $respuesta = mysqli_query($conexion, "select intCategoriaProducto, varDescripcion from tCatCategoriaProducto");
+        $respuesta = mysqli_query($conexion, "select intCategoriaProducto as codigo, varDescripcion as descripcion from tCatCategoriaProducto");
         $resultado = mysqli_fetch_all($respuesta, MYSQLI_ASSOC);
         echo json_encode($resultado);
         break;
