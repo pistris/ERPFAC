@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<!-- 
+Template Name: Marvin - Responsive Bootstrap 4 Admin Dashboard Template
+Author: Hencework
+Contact: https://hencework.ticksy.com/
+
+License: You must have a valid license purchased only from templatemonster to legally use the template for your project.
+-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Marvin I Login</title>
+    <meta name="description" content="A responsive bootstrap 4 admin dashboard template by hencework" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Custom CSS -->
+    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    
+   
+	<!-- HK Wrapper -->
+	<div class="hk-wrapper">
+
+        <!-- Main Content -->
+        <div class="hk-pg-wrapper hk-auth-wrapper">
+            <header class="d-flex justify-content-between align-items-center">
+                <a class="d-flex text-white auth-brand" href="#">
+                    Marvin
+                </a>
+                <div class="btn-group btn-group-sm">
+                    <a href="#" class="btn btn-outline-secondary">Help</a>
+                    <a href="#" class="btn btn-outline-secondary">About Us</a>
+                </div>
+            </header>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-5 pa-0">
+                        <div id="owl_demo_1" class="owl-carousel dots-on-item owl-theme">
+                            <div class="fadeOut item auth-cover-img overlay-wrap" style="background-image:url(dist/img/gallery/mock12.jpg);">
+                                <div class="auth-cover-info py-xl-0 pt-100 pb-50">
+                                    <div class="auth-cover-content text-center w-xxl-75 w-sm-90 w-xs-100">
+                                        <h1 class="display-3 text-white mb-20">Understand and look deep into nature.</h1>
+                                        <p class="text-white">The purpose of lorem ipsum is to create a natural looking block of text (sentence, paragraph, page, etc.) that doesn't distract from the layout. Again during the 90s as desktop publishers bundled the text with their software.</p>
+                                    </div>
+                                </div>
+                                <div class="bg-overlay bg-trans-dark-50"></div>
+                            </div>
+                            <div class="fadeOut item auth-cover-img overlay-wrap" style="background-image:url(dist/img/gallery/mock11.jpg);">
+                                <div class="auth-cover-info py-xl-0 pt-100 pb-50">
+                                    <div class="auth-cover-content text-center w-xxl-75 w-sm-90 w-xs-100">
+                                        <h1 class="display-3 text-white mb-20">Experience matters for good applications.</h1>
+                                        <p class="text-white">The passage experienced a surge in popularity during the 1960s when Letraset used it on their dry-transfer sheets, and again during the 90s as desktop publishers bundled the text with their software.</p>
+                                    </div>
+                                </div>
+								<div class="bg-overlay bg-trans-dark-50"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 pa-0">
+                        <div class="auth-form-wrap py-xl-0 py-50">
+                            <div class="auth-form w-xxl-55 w-xl-75 w-sm-90 w-xs-100">
+                                <form>
+                                    <!-- <h1 class="display-4 mb-10">Welcome Back :)</h1> -->
+                                    <p class="mb-30">
+                                        Inicie sesión en su cuenta y disfrute de beneficios ilimitados.</p>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Usuario" type="text"  id="Usuario" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input class="form-control" placeholder="Password" type="password"  id="Clave" required>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><span class="feather-icon"><i data-feather="eye-off"></i></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-25">
+                                        <!-- <input class="custom-control-input" id="same-address" type="checkbox" checked> -->
+                                        <!-- <label class="custom-control-label font-14" for="same-address">Keep me logged in</label> -->
+                                    </div>
+                                    <button class="btn btn-primary btn-block" type="submit" id="BotonLogin">Login</button>
+                                    <p class="font-14 text-center mt-15">Tiene problemas con el inicio de sesion?</p>
+                                    <div class="option-sep">or</div>
+                                    <div class="form-row">
+                                        <div class="col-sm-6 mb-20">
+                                            <button class="btn btn-indigo btn-block btn-wth-icon"> <span class="icon-label"><i class="fa fa-facebook"></i> </span><span class="btn-text">Ingrese con Facebook</span></button>
+                                        </div>
+                                        <div class="col-sm-6 mb-20">
+                                            <button class="btn btn-sky btn-block btn-wth-icon"> <span class="icon-label"><i class="fa fa-twitter"></i> </span><span class="btn-text">Ingrese con Twitter</span></button>
+                                        </div>
+                                    </div>
+                                    <p class="text-center">No se encuentra registrado? <a href="#" id="NuevoUsuario">Registrarse</a></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="FormularioNuevoUsuario" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input type="hidden" id="Codigo">
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label>Nombre de usuario:</label>
+                      <input type="text" id="NombreNuevo" class="form-control">
+                    </div>
+                  </div>
+        
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label>Clave:</label>
+                      <input type="password" id="Clave1" class="form-control">
+                    </div>
+                  </div>
+        
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label>Repita clave:</label>
+                      <input type="password" id="Clave2" class="form-control">
+                    </div>
+                  </div>
+        
+                </div>
+                <div class="modal-footer">
+        
+                  <button type="button" id="BotonAgregarUsuario" class="btn btn-success">Agregar</button>
+                  <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+        
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- /Main Content -->
+
+    </div>
+    <!-- /HK Wrapper -->
+    
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      $('#NuevoUsuario').click(function () {
+        borrarFormulario();
+        $("#FormularioNuevoUsuario").modal();
+      });
+
+      $('#BotonAgregarUsuario').click(function () {
+        let nuevousuario = retornarNuevoUsuario();
+        if (validarEntradaDatos(nuevousuario))
+          agregarNuevoUsuario(nuevousuario);
+      });
+
+      $('#BotonLogin').click(function () {
+        let usuario = retornarUsuario();
+        loginUsuario(usuario);
+      });
+
+      function borrarFormulario() {
+        $('#NombreNuevo').val("");
+        $('#Clave1').val("");
+        $('#Clave2').val("");
+
+      }
+
+      function retornarNuevoUsuario() {
+        let nuevousuario = {
+          nombrenuevo: $('#NombreNuevo').val(),
+          clave1: $('#Clave1').val(),
+          clave2: $('#Clave2').val()
+        };
+        return nuevousuario;
+      }
+
+      function retornarUsuario() {
+        let usuario = {
+          usuario: $('#Usuario').val(),
+          clave: $('#Clave').val()
+        };
+        return usuario;
+      }
+
+      function validarEntradaDatos(nuevousuario) {
+        if (nuevousuario.nombrenuevo == '') {
+          alert('No puede ingresar un usuario vacío');
+          return false;
+        }
+        if (nuevousuario.clave1 == '') {
+          alert('No puede ingresar una clave vacía');
+          return false;
+        }
+        if (nuevousuario.clave1 != nuevousuario.clave2) {
+          alert('Las claves ingresadas son distintas');
+          return false;
+        }
+        return true;
+      }
+
+      function agregarNuevoUsuario(nuevousuario) {
+        $.ajax({
+          type: 'POST',
+          url: 'datosusuarios.php?accion=existe',
+          data: nuevousuario,
+          success: function (info) {
+            if (info.resultado == 'norepetido') {
+              $.ajax({
+                type: 'POST',
+                url: 'datosusuarios.php?accion=agregar',
+                data: nuevousuario,
+                success: function () {
+                  alert('se agrego el usuario');
+                  $("#FormularioNuevoUsuario").modal('hide');
+                },
+                error: function () {
+                  alert('Error');
+                }
+              });
+            } else
+              alert('Nombre de usuario existente.');
+          },
+          error: function () {
+            alert('Error');
+          }
+        });
+      }
+
+      function loginUsuario(usuario) {
+        $.ajax({
+          type: 'POST',
+          url: 'login.php',
+          data: usuario,
+          success: function (respuesta) {
+            if (respuesta == 'correcta') {
+              window.location = 'index.php';
+            }
+            else
+              alert('nombre de usuario o clave incorrecta');
+          },
+          error: function () {
+            alert('Error');
+          }
+        });
+      }
+
+    });	
+  </script>
+
+    <!-- jQuery -->
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Slimscroll JavaScript -->
+    <script src="dist/js/jquery.slimscroll.js"></script>
+
+    <!-- Fancy Dropdown JS -->
+    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+
+    <!-- Owl JavaScript -->
+    <script src="vendors/owl.carousel/dist/owl.carousel.min.js"></script>
+
+    <!-- FeatherIcons JavaScript -->
+    <script src="dist/js/feather.min.js"></script>
+
+    <!-- Init JavaScript -->
+    <script src="dist/js/init.js"></script>
+    <script src="dist/js/login-data.js"></script>
+</body>
+
+</html>

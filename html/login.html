@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+
+  <link href="bootstrap-4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/jquery-3.4.1.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="bootstrap-4.3.1/js/bootstrap.min.js"></script>
+  <style>
+    body,
+    html {
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container h-100">
+    <div class="row justify-content-center h-100 align-items-center">
+      <form style="border:1px solid black;padding:1rem;border-radius: 0.5rem;">
+        <div class="form-group">
+          <label for="Usuario">Nombre de usuario</label>
+          <input type="text" class="form-control" id="Usuario" required>
+        </div>
+        <div class="form-group">
+          <label for="Clave">Clave</label>
+          <input type="password" class="form-control" id="Clave" required>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-primary" id="BotonLogin">Ingresar</button>
+        </div>
+        <div class="form-group">
+          <a href="#" id="NuevoUsuario">Nuevo usuario?</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Formulario Agregar Usuario -->
+  <div class="modal fade" id="FormularioNuevoUsuario" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="Codigo">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Nombre de usuario:</label>
+              <input type="text" id="NombreNuevo" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Clave:</label>
+              <input type="password" id="Clave1" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Repita clave:</label>
+              <input type="password" id="Clave2" class="form-control">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" id="BotonAgregarUsuario" class="btn btn-success">Agregar</button>
+          <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      $('#NuevoUsuario').click(function () {
+        borrarFormulario();
+        $("#FormularioNuevoUsuario").modal();
+      });
+
+      $('#BotonAgregarUsuario').click(function () {
+        let nuevousuario = retornarNuevoUsuario();
+        if (validarEntradaDatos(nuevousuario))
+          agregarNuevoUsuario(nuevousuario);
+      });
+
+      $('#BotonLogin').click(function () {
+        let usuario = retornarUsuario();
+        loginUsuario(usuario);
+      });
+
+      function borrarFormulario() {
+        $('#NombreNuevo').val("");
+        $('#Clave1').val("");
+        $('#Clave2').val("");
+
+      }
+
+      function retornarNuevoUsuario() {
+        let nuevousuario = {
+          nombrenuevo: $('#NombreNuevo').val(),
+          clave1: $('#Clave1').val(),
+          clave2: $('#Clave2').val()
+        };
+        return nuevousuario;
+      }
+
+      function retornarUsuario() {
+        let usuario = {
+          usuario: $('#Usuario').val(),
+          clave: $('#Clave').val()
+        };
+        return usuario;
+      }
+
+      function validarEntradaDatos(nuevousuario) {
+        if (nuevousuario.nombrenuevo == '') {
+          alert('No puede ingresar un usuario vacío');
+          return false;
+        }
+        if (nuevousuario.clave1 == '') {
+          alert('No puede ingresar una clave vacía');
+          return false;
+        }
+        if (nuevousuario.clave1 != nuevousuario.clave2) {
+          alert('Las claves ingresadas son distintas');
+          return false;
+        }
+        return true;
+      }
+
+      function agregarNuevoUsuario(nuevousuario) {
+        $.ajax({
+          type: 'POST',
+          url: 'datosusuarios.php?accion=existe',
+          data: nuevousuario,
+          success: function (info) {
+            if (info.resultado == 'norepetido') {
+              $.ajax({
+                type: 'POST',
+                url: 'datosusuarios.php?accion=agregar',
+                data: nuevousuario,
+                success: function () {
+                  alert('se agrego el usuario');
+                  $("#FormularioNuevoUsuario").modal('hide');
+                },
+                error: function () {
+                  alert('Error');
+                }
+              });
+            } else
+              alert('Nombre de usuario existente.');
+          },
+          error: function () {
+            alert('Error');
+          }
+        });
+      }
+
+      function loginUsuario(usuario) {
+        $.ajax({
+          type: 'POST',
+          url: 'login.php',
+          data: usuario,
+          success: function (respuesta) {
+            if (respuesta == 'correcta') {
+              window.location = 'index.php';
+            }
+            else
+              alert('nombre de usuario o clave incorrecta');
+          },
+          error: function () {
+            alert('Error');
+          }
+        });
+      }
+
+    });	
+  </script>
+
+</body>
+
+</html>
