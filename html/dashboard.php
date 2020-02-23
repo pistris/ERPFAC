@@ -16,7 +16,7 @@ License: You must have a valid license purchased only from templatemonster to le
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> 
 	
 	<!-- vector map CSS -->
     <link href="../vendors/vectormap/jquery-jvectormap-2.0.3.css" rel="stylesheet" type="text/css" />
