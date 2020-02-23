@@ -147,7 +147,7 @@
       function MostrarProductos() {
         $.ajax({
           type: 'GET',
-          url: 'procesar.php?accion=listar',
+          url: 'ProProductos.php?accion=listar',
           success: function (productos) {
             let filas = '';
             for (let producto of productos) {
@@ -176,7 +176,7 @@
       function CargarCategorias() {
         $.ajax({
           type: 'GET',
-          url: 'procesar.php?accion=listarcategorias',
+          url: 'ProProductos.php?accion=listarcategorias',
           success: function (categorias) {
             let filas = '';
             for (let categoria of categorias) {
@@ -197,7 +197,7 @@
       function EnviarInformacion(accion) {
         $.ajax({
           type: 'POST',
-          url: 'procesar.php?accion=' + accion,
+          url: 'ProProductos.php?accion=' + accion,
           data: producto,
           success: function (msg) {
             MostrarProductos();
@@ -211,7 +211,7 @@
       function RecuperarProducto(accion) {
         $.ajax({
           type: 'POST',
-          url: 'procesar.php?accion=' + accion,
+          url: 'ProProductos.php?accion=' + accion,
           data: producto,
           success: function (datos) {
             $('#Descripcion').val(datos[0]['descripcion']);
