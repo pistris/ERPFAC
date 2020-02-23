@@ -39,9 +39,9 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Administración</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="categorias/administracion.html">Mantenimiento de categorías</a>
-          <a class="dropdown-item" href="productos/administracion.html">Mantenimiento de productos</a>
-          <a class="dropdown-item" href="clientes/administracion.html">Mantenimiento de clientes</a>
+          <a class="dropdown-item" href="Modulos/Productos/CategoriaProductos.html">Mantenimiento de categorías</a>
+          <a class="dropdown-item" href="Modulos/Productos/Productos.html">Mantenimiento de productos</a>
+          <a class="dropdown-item" href="Modulos/Clientes/Clientes.html">Mantenimiento de clientes</a>
         </div>
       </li>
     </ul>
