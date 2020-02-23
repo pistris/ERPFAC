@@ -2,7 +2,7 @@
     <?php include('Templates/header.php'); ?>
     <?php include('Templates/scriptheader.php'); ?>
 
- 
+
     <!-- Adapte sus script -->
 
 </head>
@@ -21,7 +21,7 @@
         <!-- Main Content -->
         <div class="hk-pg-wrapper">
 
-      
+        <?php include('Modulos/Productos/CategoriaProductos.html'); ?>
         
            
 
