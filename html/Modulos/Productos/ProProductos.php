@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require("../conexion.php");
+require("../../conexion.php");
 
 $conexion = retornarConexion();
 
