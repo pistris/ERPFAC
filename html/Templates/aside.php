@@ -149,8 +149,24 @@
                             <li class="nav-item">
                                 <ul class="nav flex-column">
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="#">Empresas</a>
+                                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#empresas_drp">Empresas</a>
                                     </li>
+                                    <ul id="empresas_drp" class="nav flex-column collapse collapse-level-1">
+                                        <li class="nav-item">
+                                            <ul class="nav flex-column">
+                                                <li class="nav-item active">
+                                                    <a class="nav-link" href="CatalogoEmpresas.php">Catalo de Empresas</a>
+                                                </li>
+                                                <li class="nav-item active">
+                                                    <a class="nav-link" href="#">Catalo de Franquicias</a>
+                                                </li>
+                                                <li class="nav-item active">
+                                                    <a class="nav-link" href="#">Catalo de Usuarios</a>
+                                                </li>
+                                            
+                                            </ul>
+                                        </li>
+                                    </ul>
                                 
                                 </ul>
                             </li>
