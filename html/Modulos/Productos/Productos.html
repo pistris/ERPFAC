@@ -1,17 +1,3 @@
-<!doctype html>
-<html>
-
-<head>
-  <title>Administración de categorías</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="../../SRC/css/bootstrap.min.css">
-  <script src="../../SRC/js/jquery.min.js"></script>
-  <script src="../../SRC/js/popper.min.js"></script>
-  <script src="../../SRC/js/bootstrap.min.js"></script>
-</head>
-
-<body>
   <div class="container">
     <h1>Administracion de Productos</h1>
     <table class="table table-striped">
@@ -101,7 +87,7 @@
 
       //Boton que vuelve a la página principal
       $('#btnFinalizar').click(function () {
-        window.location = '../../index.php';
+        window.location = 'dashboard.php';
       });
 
       //Boton que muestra el diálogo de agregar
@@ -147,7 +133,7 @@
       function MostrarProductos() {
         $.ajax({
           type: 'GET',
-          url: 'ProProductos.php?accion=listar',
+          url: 'Modulos/Productos/ProProductos.php?accion=listar',
           success: function (productos) {
             let filas = '';
             for (let producto of productos) {
@@ -176,7 +162,7 @@
       function CargarCategorias() {
         $.ajax({
           type: 'GET',
-          url: 'ProProductos.php?accion=listarcategorias',
+          url: 'Modulos/Productos/ProProductos.php?accion=listarcategorias',
           success: function (categorias) {
             let filas = '';
             for (let categoria of categorias) {
@@ -197,7 +183,7 @@
       function EnviarInformacion(accion) {
         $.ajax({
           type: 'POST',
-          url: 'ProProductos.php?accion=' + accion,
+          url: 'Modulos/Productos/ProProductos.php?accion=' + accion,
           data: producto,
           success: function (msg) {
             MostrarProductos();
@@ -211,7 +197,7 @@
       function RecuperarProducto(accion) {
         $.ajax({
           type: 'POST',
-          url: 'ProProductos.php?accion=' + accion,
+          url: 'Modulos/Productos/ProProductos.php?accion=' + accion,
           data: producto,
           success: function (datos) {
             $('#Descripcion').val(datos[0]['descripcion']);
@@ -264,7 +250,3 @@
 
     });    
   </script>
-
-</body>
-
-</html>

@@ -181,10 +181,10 @@
                             <li class="nav-item">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="Modulos/Productos/CategoriaProductos.html">Categoria de Productos</a>
+                                        <a class="nav-link" href="CategoriaProductos.php">Categoria de Productos</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="Modulos/Productos/Productos.html">Productos</a>
+                                        <a class="nav-link" href="Productos.php">Productos</a>
                                     </li>
                                 </ul>
                             </li>
