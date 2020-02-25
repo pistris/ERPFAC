@@ -190,6 +190,24 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#prod_drp">
+                            <i class="fa fa-diamond" aria-hidden="true"></i>
+                            <span class="nav-link-text">Clientes</span>
+                        </a>
+                        <ul id="prod_drp" class="nav flex-column collapse collapse-level-1">
+                            <li class="nav-item">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="CategoriaClientes.php">Categoria de Clientes</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="Clientes.php">Clientes</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
                     <!--<li class="nav-item">
                         <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp">
                             <span class="feather-icon"><i data-feather="zap"></i></span>

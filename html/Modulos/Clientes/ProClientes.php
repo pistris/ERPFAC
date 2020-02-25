@@ -6,14 +6,14 @@ $pdo = retornarConexion();
 
 switch ($_GET['accion']) {
     case 'listar':
-        $sql = $pdo->prepare("select codigo, nombre, telefono, mail, direccion from clientes");
+        $sql = $pdo->prepare("select intCliente as codigo, varNombre as nombre,varTelefono as telefono, varEmail as mail, varDireccion as direccion from tCatCliente");
         $sql->execute();
         $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($resultado);
         break;
 
     case 'agregar':
-        $sql = $pdo->prepare("insert into clientes(nombre,telefono,mail,direccion) values (:nombre,:telefono,:mail,:direccion)");
+        $sql = $pdo->prepare("insert into tCatCliente(varNombre,varTelefono,varEmail,varDireccion) values (:nombre,:telefono,:mail,:direccion)");
         $respuesta = $sql->execute(array(
             "nombre" => $_POST['nombre'],
             "telefono" => $_POST['telefono'],
@@ -24,25 +24,25 @@ switch ($_GET['accion']) {
         break;
 
     case 'recuperar':
-        $sql = $pdo->prepare("select codigo, nombre, telefono, mail, direccion from clientes where codigo=:codigo");
+        $sql = $pdo->prepare("select intCliente as codigo,varNombre as nombre,varTelefono as telefono,varEmail as mail,varDireccion as direccion from tCatCliente where intCliente=:codigo");
         $sql->execute(array("codigo" => $_POST['codigo']));
         $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($resultado);
         break;
 
     case 'borrar':
-        $sql = $pdo->prepare("delete from clientes where codigo=:codigo");
+        $sql = $pdo->prepare("delete from tCatCliente where intCliente=:codigo");
         $resultado = $sql->execute(array("codigo" => $_POST['codigo']));
         echo json_encode($resultado);
         break;
 
     case 'modificar':
-        $sql = $pdo->prepare("update clientes
-                                set nombre=:nombre,
-                                    telefono=:telefono,
-                                    mail=:mail,
-                                    direccion=:direccion
-                                where codigo=:codigo");
+        $sql = $pdo->prepare("update tCatCliente
+                                set varNombre=:nombre,
+                                varTelefono=:telefono,
+                                    varEmail=:mail,
+                                    varDireccion=:direccion
+                                where intCliente=:codigo");
         $respuesta = $sql->execute(array(
             "nombre" => $_POST['nombre'],
             "telefono" => $_POST['telefono'],
