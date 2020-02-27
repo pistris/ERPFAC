@@ -1,13 +1,9 @@
 <?php
-
 function retornarConexion() {
-$con = mysqli_connect(
-    "bhuaagzhlgugk5u9beiw-mysql.services.clever-cloud.com", //host
-    "uqmqkkwu33ddsizp", //usr
-    "RZIZqzC0eIuZ901QyzPA", //pass
-    "bhuaagzhlgugk5u9beiw") or die("problemas");
-    mysqli_set_charset($con,'utf8');
-    return $con;   
+    $server="bhuaagzhlgugk5u9beiw-mysql.services.clever-cloud.com";
+    $usuario="uqmqkkwu33ddsizp";
+    $clave="RZIZqzC0eIuZ901QyzPA";
+    $base="bhuaagzhlgugk5u9beiw";
+    return new PDO("mysql:dbname=$base;host=$server", "$usuario","$clave", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")); 
 }
-
 ?>

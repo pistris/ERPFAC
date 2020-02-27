@@ -2,31 +2,45 @@
 header('Content-Type: application/json');
 require("../../conexion.php");
 
-$conexion = retornarConexion();
+$pdo = retornarConexion();
 
 switch ($_GET['accion']) {
     case 'listar':
-        $respuesta = mysqli_query($conexion, "select intCategoriaProducto as codigo, varDescripcion as descripcion from tCatCategoriaProducto");
-        $resultado = mysqli_fetch_all($respuesta, MYSQLI_ASSOC);
+        $sql = $pdo->prepare( "select intCategoriaProducto as codigo, varDescripcion as descripcion from tCatCategoriaProducto");
+        $sql->execute();
+        $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($resultado);
         break;
     case 'agregar':
-        $respuesta = mysqli_query($conexion, "insert into tCatCategoriaProducto(varDescripcion) values ('$_POST[descripcion]')");
+     
+        $sql = $pdo->prepare("insert into tCatCategoriaProducto(varDescripcion) values (:descripcion)");
+        $respuesta = $sql->execute(array("descripcion" => $_POST['descripcion']));
         echo json_encode($respuesta);
         break;
+
+
     case 'recuperar':
-        $respuesta = mysqli_query($conexion, "select intCategoriaProducto as codigo, varDescripcion as descripcion from tCatCategoriaProducto where intCategoriaProducto=$_POST[codigo]");
-        $resultado = mysqli_fetch_all($respuesta, MYSQLI_ASSOC);
+      
+        $sql = $pdo->prepare("select intCategoriaProducto as codigo, varDescripcion as descripcion from tCatCategoriaProducto where intCategoriaProducto=:codigo");
+        $sql->execute(array("codigo" => $_POST['codigo']));
+        $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($resultado);
         break;
+
     case 'borrar':
-        $respuesta = mysqli_query($conexion, "delete from tCatCategoriaProducto where intCategoriaProducto=".$_POST['codigo']);
+         $sql = $pdo->prepare("delete from tCatCategoriaProducto where intCategoriaProducto=:codigo");
+        $resultado = $sql->execute(array("codigo" => $_POST['codigo']));
+        echo json_encode($resultado);
+        break;
+
+    case 'modificar':
+        $sql = $pdo->prepare("update tCatCategoriaProducto set varDescripcion=:descripcion where intCategoriaProducto=:codigo");
+        $respuesta = $sql->execute(array(
+            "descripcion" => $_POST['descripcion'],
+            "codigo" => $_POST['codigo']
+        ));
         echo json_encode($respuesta);
         break;
-    case 'modificar':
-        $respuesta = mysqli_query($conexion, "update tCatCategoriaProducto set varDescripcion='$_POST[descripcion]' where intCategoriaProducto=$_POST[codigo]");
-        echo json_encode($respuesta);
-        break;        
 }
 
 ?>
