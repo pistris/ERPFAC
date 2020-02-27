@@ -2,10 +2,10 @@
 
 function retornarConexion() {
 $con = mysqli_connect(
-    "bdsistemaerp.cyfdhmrju78e.us-east-2.rds.amazonaws.com",
-    "adminerp",
-    "RD4l2fwiczO7W87bFbhj",
-    "dbERP") or die("problemas");
+    "bhuaagzhlgugk5u9beiw-mysql.services.clever-cloud.com", //host
+    "uqmqkkwu33ddsizp", //usr
+    "RZIZqzC0eIuZ901QyzPA", //pass
+    "bhuaagzhlgugk5u9beiw") or die("problemas");
     mysqli_set_charset($con,'utf8');
     return $con;   
 }
