@@ -1,13 +1,8 @@
-<!DOCTYPE html> 
-<!--  
-Template Name: Marvin - Responsive Bootstrap 4 Admin Dashboard Template
-Author: Hencework
-Contact: https://hencework.ticksy.com/
 
     <?php include('Templates/header.php'); ?>
     <?php include('Templates/scriptheader.php'); ?>
 
- 
+
     <!-- Adapte sus script -->
 
 </head>
@@ -26,7 +21,7 @@ Contact: https://hencework.ticksy.com/
         <!-- Main Content -->
         <div class="hk-pg-wrapper">
 
-      
+        <?php include('Modulos/Productos/CategoriaProductos.html'); ?>
         
            
 
