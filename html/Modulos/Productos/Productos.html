@@ -1,3 +1,4 @@
+
   <div class="container">
     <h1>Administracion de Productos</h1>
     <table class="table table-striped">
@@ -41,42 +42,50 @@
               <label>Precio:</label>
               <input type="number" id="Precio" class="form-control" placeholder="">
             </div>
-          </div>
 
-          <div class="form-group">
-            <label>Categoría:</label>
-            <select class="form-control" id="CodigoCategoria">
-            </select>
           </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label>Precio:</label>
+            <input type="number" id="Precio" class="form-control" placeholder="">
+          </div>
+        </div>
 
+        <div class="form-group">
+          <label>Categoría:</label>
+          <select class="form-control" id="CodigoCategoria">
+          </select>
         </div>
-        <div class="modal-footer">
-          <button type="button" id="btnConfirmarAgregar" class="btn btn-success">Agregar</button>
-          <button type="button" id="btnModificar" class="btn btn-success">Modificar</button>
-          <button type="button" id="btnBorrar" class="btn btn-success">Borrar</button>
-          <button type="button" data-dismiss="modal" class="btn btn-success">Cancelar</button>
-        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnConfirmarAgregar" class="btn btn-success">Agregar</button>
+        <button type="button" id="btnModificar" class="btn btn-success">Modificar</button>
+        <button type="button" id="btnBorrar" class="btn btn-success">Borrar</button>
+        <button type="button" data-dismiss="modal" class="btn btn-success">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ModalConfirmarCancelar -->
+<div class="modal fade" id="ModalConfirmarBorrar" tabindex="-1" role="dialog">
+  <div class="modal-dialog" style="max-width: 600px" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Realmente quiere borrarlo?</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnConfirmarBorrado" class="btn btn-success">Confirmar</button>
+        <button type="button" data-dismiss="modal" class="btn btn-success">Cancelar</button>
       </div>
     </div>
   </div>
 
-  <!-- ModalConfirmarCancelar -->
-  <div class="modal fade" id="ModalConfirmarBorrar" tabindex="-1" role="dialog">
-    <div class="modal-dialog" style="max-width: 600px" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1>Realmente quiere borrarlo?</h1>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="btnConfirmarBorrado" class="btn btn-success">Confirmar</button>
-          <button type="button" data-dismiss="modal" class="btn btn-success">Cancelar</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -107,28 +116,97 @@
           return;
         $("#ModalEditar").modal('hide');
         EnviarInformacion("agregar");
+
+      });
+    }
+
+    function CargarCategorias() {
+      $.ajax({
+        type: 'GET',
+        url: 'Modulos/Productos/ProProductos.php?accion=listarcategorias',
+        success: function (categorias) {
+          let filas = '';
+          for (let categoria of categorias) {
+            filas += '<option value="' + categoria.codigo + '">' + categoria.descripcion + '</option>';
+          }
+          $('#CodigoCategoria').html(filas);
+        },
+        error: function () {
+          alert("Hay un error ..");
+        }
+      });
+    }
+
+
+
+    //Funciones AJAX para enviar y recuperar datos del servidor
+    //******************************************************* 
+    function EnviarInformacion(accion) {
+      $.ajax({
+        type: 'POST',
+        url: 'Modulos/Productos/ProProductos.php?accion=' + accion,
+        data: producto,
+        success: function (msg) {
+          MostrarProductos();
+        },
+        error: function () {
+          alert("Hay un error ..");
+        }
+      });
+    }
+
+    function RecuperarProducto(accion) {
+      $.ajax({
+        type: 'POST',
+        url: 'Modulos/Productos/ProProductos.php?accion=' + accion,
+        data: producto,
+        success: function (datos) {
+          $('#Descripcion').val(datos[0]['descripcion']);
+          $('#Precio').val(datos[0]['precio']);
+          selectItemByValue(document.getElementById('CodigoCategoria'), datos[0]['codigocategoria']);
+        },
+        error: function () {
+          alert("Hay un error ..");
+        }
       });
 
-      $('#btnBorrar').click(function () {
-        $("#ModalEditar").modal('hide');
-        $("#ModalConfirmarBorrar").modal();
-      });
+    }
 
-      $('#btnConfirmarBorrado').click(function () {
-        $("#ModalConfirmarBorrar").modal('hide');
-        RecolectarDatosFormulario();
-        $("#ModalEditar").modal('hide');
-        EnviarInformacion("borrar");
-      });
+    function RecolectarDatosFormulario() {
+      producto = {
+        codigo: $('#Codigo').val(),
+        descripcion: $('#Descripcion').val(),
+        precio: $('#Precio').val(),
+        codigocategoria: $('#CodigoCategoria').val()
+      };
+    }
 
-      $('#btnModificar').click(function () {
-        RecolectarDatosFormulario();
-        if (!EntradaFormularioCorrecto())
-          return;
-        $("#ModalEditar").modal('hide');
-        EnviarInformacion("modificar");
-      });
-      //******************************************************* 
+    function LimpiarFormulario() {
+      $('#Codigo').val('');
+      $('#Descripcion').val('');
+      $('#Precio').val('');
+      $('#CodigoCategoria').val('');
+    }
+
+    function EntradaFormularioCorrecto() {
+      if (producto['descripcion'] == '') {
+        alert("No Puede estar vacía la descripción");
+        return false;
+      }
+      if (producto['precio'] == '') {
+        alert("No Puede estar vacío el precio");
+        return false;
+      }
+      return true;
+    }
+
+    // otras funciones
+    // Selecciona un determinado elemento de un control HTML 'select'
+    function selectItemByValue(elmnt, value) {
+      for (var i = 0; i < elmnt.options.length; i++) {
+        if (elmnt.options[i].value == value)
+          elmnt.selectedIndex = i;
+
 
       function MostrarProductos() {
         $.ajax({
@@ -192,7 +270,12 @@
             alert("Hay un error ..");
           }
         });
+
       }
+    }
+
+  });    
+</script>
 
       function RecuperarProducto(accion) {
         $.ajax({

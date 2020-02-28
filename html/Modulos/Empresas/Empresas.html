@@ -1,0 +1,444 @@
+<!-- Container -->
+<div class="progress progress-bar-xs mb-10">
+        <div class="progress-bar bg-success w-25" name="progressbar" id="progressbar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+<div class="container">
+
+    
+    <!-- Row -->
+    <div class="row">
+        <div class="col-xl-12">
+            <section class="hk-sec-wrapper">
+                <h5 class="hk-sec-title">Empresas</h5>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="table-wrap">
+                            <table id="datable_3" class="table table-hover w-100 display">
+                                <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>Nombre</th>
+                                        <th>RFC</th>
+                                        <th>Estado</th>
+                                        <th colspan="2"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="datos">
+                                    
+                                </tbody>
+                            </table>
+                            <div>
+                                <button type="button" id="btnAgregar" class="btn btn-success">Nueva Empresa</button>
+                                <!--<button type="button" id="btnFinalizar" class="btn btn-success">Finalizar</button>-->
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">        
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form class="smart-form" name="form1">
+                    <div class="modal-body">
+                        <input type="hidden" id="intEmpresa">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Nombre*</label>
+                                <input type="text" id="txtNombre" class="form-control" placeholder="" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Razón Social*</label>
+                                <input type="text" id="txtRazon" class="form-control" placeholder="" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>RFC*</label>
+                                <input type="text" id="txtRFC" class="form-control" placeholder="" required>
+                            </div>
+                        </div>  
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Estado*</label>
+                                <select class="form-control selEstado" name="selEstado" id="selEstado" required>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Ciudad*</label>
+                                <select class="form-control selCiudad" name="selCiudad" id="selCiudad" disabled required>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Dirección*</label>
+                                <input type="text" id="txtDireccion" class="form-control" placeholder="" required>
+                            </div>
+                        </div>  
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label>Num. Exterior*</label>
+                                <input type="text" id="txtNumExterior" class="form-control" placeholder="" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Num. Interior</label>
+                                <input type="text" id="txtNumInterior" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>C.P*</label>
+                                <input type="text" id="txtCP" class="form-control" placeholder="" required>
+                            </div>
+                        </div>    
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Email</label>
+                                <input type="text" id="txtEmail" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Teléfono</label>
+                                <input type="text" id="txtTelefono" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Activo</label>
+                                <div class="custom-control custom-checkbox checkbox-teal">
+                                    <input type="checkbox" class="custom-control-input" id="chActivo" checked>
+                                    <label class="custom-control-label" for="chActivo"></label>
+                                </div>
+                            </div>
+                        </div>        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btnConfirmarAgregar" class="btn btn-success">Agregar</button>
+                        <button type="button" id="btnModificar" class="btn btn-success">Modificar</button>
+                        <!--<button type="button" id="btnBorrar" class="btn btn-success">Borrar</button>-->
+                        <button type="button" data-dismiss="modal" class="btn btn-success">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- /Row -->
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        var empresa;
+        MostrarCategorias();
+        CargarEstados();
+
+        //Boton que vuelve a la página principal
+        $('#btnFinalizar').click(function() {
+            window.location = '../../index.php';
+        });
+
+        //Boton que muestra el diálogo de agregar
+        function GuardarEmpresa(){
+            RecolectarDatosFormulario();
+            $("#ModalEditar").modal('hide');
+            EnviarInformacion("agregar");
+
+        }
+        
+        $('#btnAgregar').click(function() {
+            LimpiarFormulario();
+            $('#btnConfirmarAgregar').show();
+            $('#btnModificar').hide();
+            $('#btnBorrar').hide();
+            $("#ModalEditar").modal();
+        });
+
+        $('#btnConfirmarAgregar').click(function() {
+            RecolectarDatosFormulario();
+            //if (!EntradaFormularioCorrecto())
+            //return;
+            $("#ModalEditar").modal('hide');
+            EnviarInformacion("agregar");
+        });
+
+        $('#btnBorrar').click(function() {
+            $("#ModalEditar").modal('hide');
+            $("#ModalConfirmarBorrar").modal();
+        });
+
+
+        $('#btnConfirmarBorrado').click(function() {
+            $("#ModalConfirmarBorrar").modal('hide');
+            RecolectarDatosFormulario();
+            $("#ModalEditar").modal('hide');
+            EnviarInformacion("borrar");
+        });
+
+        $('#btnModificar').click(function() {
+            RecolectarDatosFormulario();
+            //if (!EntradaFormularioCorrecto())
+            //return;
+            $("#ModalEditar").modal('hide');
+            EnviarInformacion("modificar");
+        });
+        
+        //******************************************************* 
+
+        function MostrarCategorias() {
+            $.ajax({
+            type: 'GET',
+            url: 'Modulos/Empresas/ProEmpresas.php?accion=listar',
+            success: function(respons) {
+                console.log(respons)
+                    $('#progressbar').removeClass('w-25');
+                    $('#progressbar').addClass('w-100');
+                let filas = '';
+                for (let empresa of respons) {
+                    console.log(empresa)
+                    //<button class="btn btn-icon btn-icon-circle btn-secondary btn-icon-style-3"><span class="btn-icon-wrap"><i class="fa fa-pencil"></i></span></button>
+                filas += `
+                    <tr>
+                        <td>` + empresa.intEmpresa + `</td>
+                        <td>` + empresa.varNombreComercial + `</td>
+                        <td>` + empresa.varRFC + `</td>
+                        <td>` + empresa.estado + `</td>
+                        <td>
+                            <button class="btn btn-icon btn-icon-circle btn-secondary btn-icon-style-3 botonEditar" data-codigo="` + empresa.intEmpresa + `">
+                                <span class="btn-icon-wrap"><i class="fa fa-pencil"></i></span>
+                            </button>
+                        
+                            <button class="btn btn-icon btn-icon-circle btn-info btn-icon-style-3 botonBorrar" data-codigo="` + empresa.intEmpresa + `">
+                                <span class="btn-icon-wrap"><i class="icon-trash"></i></span>
+                            </button>
+                        </td>
+                    </tr>
+                `
+                //filas += '<tr><td>' + categoria.codigo + '</td><td>' + categoria.descripcion + '</td>';
+                //filas += '<td><a class="btn btn-primary botoneditar" role="button" href="#" data-codigo="' + categoria.codigo + '">Edita?</a> </td></tr>';
+                }
+                setTimeout(function(){
+                    $('#progressbar').hide();
+                }, 3000);
+                $('#datos').html(filas);
+                //Boton que muestra el diálogo de modificar y borrar
+                $('.botonEditar').click(function() {
+                    $('#progressbar').removeClass('w-100');
+                    $('#progressbar').addClass('w-25');
+                    $('#progressbar').show();
+
+                    $('#intEmpresa').val($(this).get(0).dataset.codigo);
+                    RecolectarDatosFormulario();
+                    RecuperarEmpresa("recuperar");
+                    $('#btnConfirmarAgregar').hide();
+                    $('#btnModificar').show();
+                    $('#btnBorrar').show();
+                    $("#ModalEditar").modal();
+                });
+
+            },
+            error: function() {
+                    $('#progressbar').removeClass('w-25');
+                    $('#progressbar').addClass('w-100');
+                setTimeout(function(){
+                    $('#progressbar').hide();
+                }, 3000);
+                alert("Hay un error ..");
+            }
+            });
+        }
+
+        //Funciones AJAX para enviar y recuperar datos del servidor
+        //******************************************************* 
+        function EnviarInformacion(accion) {
+            //alert(accion)
+            $.ajax({
+                type: 'POST',
+                url: 'Modulos/Empresas/ProEmpresas.php?accion=' + accion,
+                data: empresa,
+                success: function(msg) {
+
+                setTimeout(function(){
+                    alert(msg)
+                }, 3000);
+                
+                    MostrarCategorias();
+                },
+                error: function() {
+                    alert("Hay un error ..");
+                }
+            });
+        }
+
+        function CargarEstados() {
+            $.ajax({
+                type: 'GET',
+                url: 'Modulos/Empresas/ProEmpresas.php?accion=estados',
+                success: function (respons) {
+                    let filas = '';
+                    let x=0;
+                    for (let estado of respons) {
+                        if(x==0){
+                            filas += '<option value="">Seleccionar</option>';
+                            x++;
+                        }
+                        filas += '<option value="' + estado.intEstado + '">' + estado.varEstado + '</option>';
+                    }
+                    $('#selEstado').html(filas);
+                },
+                    error: function () {
+                    alert("Hay un error  ..");
+                }
+            });
+        }
+
+        function CargarCiudades(id,ciudadEstado) {
+            $.ajax({
+                type: 'POST',
+                url: 'Modulos/Empresas/ProEmpresas.php?accion=ciudad',
+                data: { intEstado: id},
+                success: function (respons) {
+                    let filas = '';
+                    let x = 0;
+                    let selected = ''
+                    for (let ciudad of respons) {
+                        if(ciudadEstado ==  ciudad.intCiudad){
+                            selected = 'selected';
+                        }else{
+                            selected = ''
+                        }
+                        if(x==0){
+                            filas += '<option value="">Seleccionar</option>';
+                            x++;
+                        }
+                        filas += '<option value="' + ciudad.intCiudad + '" ' + selected + '>' + ciudad.VarNombre + '</option>';
+                    }
+                    $('#selCiudad').html(filas);
+                    $( "#selCiudad" ).prop( "disabled", false );
+                
+                },
+                error: function () {
+                    //alert("Hay un error  ..");
+                }
+            });
+        }
+
+        function RecuperarEmpresa(accion) {
+            $.ajax({
+                type: 'POST',
+                url: 'Modulos/Empresas/ProEmpresas.php?accion=' + accion,
+                data: empresa,
+                success: function(datos) {
+                    $( "#selCiudad" ).prop( "disabled", false );
+                    $('#progressbar').removeClass('w-25');
+                    $('#progressbar').addClass('w-100');
+                    setTimeout(function(){
+                        $('#progressbar').hide();
+                    }, 3000);
+
+                    $('#intEmpresa').val(datos[0]['intEmpresa']);
+                    $('#txtNombre').val(datos[0]['varNombreComercial']);
+                    $('#txtRazon').val(datos[0]['varRazonSocial']);
+                    $('#txtRFC').val(datos[0]['varRFC']);
+                    $('#txtDireccion').val(datos[0]['varDireccion']);
+                    $('#txtTelefono').val(datos[0]['varTelefono']);
+                    $('#txtEmail').val(datos[0]['varEmail']);
+                    if(datos[0]['bitActivo'] == 0){
+                        $( "#chActivo" ).prop( "checked", false );
+                    }else{
+                        $( "#chActivo" ).prop( "checked", true );
+                    }
+                    $('#chActivo').val(datos[0]['bitActivo']);
+                    $('#txtNumExterior').val(datos[0]['varNumeroInterior']);
+                    $('#txtNumInterior').val(datos[0]['varNumeroExterior']);
+                    $('#txtCP').val(datos[0]['intCodigoPostal']);
+                    
+                    selectItemByValue(document.getElementById('selEstado'), datos[0]['intEstado']);
+                    CargarCiudades(datos[0]['intEstado'],datos[0]['intCiudad'])
+                },
+                error: function() {
+                    $('#progressbar').removeClass('w-25');
+                    $('#progressbar').addClass('w-100');
+                    setTimeout(function(){
+                        $('#progressbar').hide();
+                    }, 3000);
+                alert("Hay un error ..");
+                }
+            });
+        }
+    
+        //******************************************************* 
+
+        function RecolectarDatosFormulario() {
+            if($('#chActivo').val()){
+                activo = 1
+            }else{
+                activo = 0
+            }
+            empresa = {
+                intEmpresa: $('#intEmpresa').val(),
+                varNombreComercial: $('#txtNombre').val(),
+                varRazonSocial: $('#txtRazon').val(),
+                varRFC: $('#txtRFC').val(),
+                varDireccion: $('#txtDireccion').val(),
+                varTelefono: $('#txtTelefono').val(),
+                varEmail: $('#txtEmail').val(),
+                bitActivo: activo,
+                varNumeroInterior: $('#txtNumExterior').val(),
+                varNumeroExterior: $('#txtNumInterior').val(),
+                intCodigoPostal: $('#txtCP').val(),
+                intCiudad: $('#selCiudad').val()
+            };
+        }
+
+        function LimpiarFormulario() {
+
+            $('#intEmpresa').val('')
+            $('#txtNombre').val('')
+            $('#txtRazon').val('')
+            $('#txtRFC').val('')
+            $('#txtDireccion').val('')
+            $('#txtTelefono').val('')
+            $('#txtEmail').val('')
+            $( "#chActivo" ).prop( "checked", true );
+            $('#txtNumExterior').val('')
+            $('#txtNumInterior').val('')
+            $('#txtCP').val('')
+
+            let filas = '<option value="">Seleccionar</option>';
+            $('#selCiudad').html(filas);
+            CargarEstados();
+            $( "#selCiudad" ).prop( "disabled", true );
+
+        }
+
+        function EntradaFormularioCorrecto() {
+            if (categoria['descripcion'] == '') {
+            alert("No Puede estar vacía la descripción");
+            return false;
+            }
+            return true;
+        }
+
+        $('#selEstado').on('change', function() {
+            if($(this).val() != ''){
+                CargarCiudades($(this).val(),0)
+            }else{
+                let filas = '<option value="">Seleccionar</option>';
+                $('#selCiudad').html(filas);
+            }
+        });
+
+        function selectItemByValue(elmnt, value) {
+            for (var i = 0; i < elmnt.options.length; i++) {
+                if (elmnt.options[i].value == value)
+                elmnt.selectedIndex = i;
+            }
+        }
+    });
+
+
+
+  </script>
+<!-- /Container -->
