@@ -208,6 +208,25 @@
           alert("Hay un error ..");
         }
       });
+
+    }
+    //******************************************************* 
+
+    function RecolectarDatosFormulario() {
+      producto = {
+        codigo: $('#Codigo').val(),
+        descripcion: $('#Descripcion').val(),
+        precio: $('#Precio').val(),
+        codigocategoria: $('#CodigoCategoria').val()
+      };
+    }
+
+    function LimpiarFormulario() {
+      $('#Codigo').val('');
+      $('#Descripcion').val('');
+      $('#Precio').val('');
+      $('#CodigoCategoria').val('');
+
     }
     //******************************************************* 
 
@@ -223,5 +242,7 @@
       }
     }
 
-  
+
+  });    
 </script>
+
