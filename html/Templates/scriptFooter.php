@@ -44,6 +44,7 @@
 	
 	<!-- Toastr JS 
     <script src="../vendors/jquery-toast-plugin/dist/jquery.toast.min.js"></script>-->
+    <script src="../dist/js/toast-data.js"></script>
     
     <!-- Init JavaScript -->
     <script src="../dist/js/init.js"></script>

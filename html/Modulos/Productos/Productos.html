@@ -208,6 +208,7 @@
           alert("Hay un error ..");
         }
       });
+
     }
     //******************************************************* 
 
@@ -225,19 +226,12 @@
       $('#Descripcion').val('');
       $('#Precio').val('');
       $('#CodigoCategoria').val('');
-    }
 
-    function EntradaFormularioCorrecto() {
-      if (producto['descripcion'] == '') {
-        alert("No Puede estar vacía la descripción");
-        return false;
-      }
-      if (producto['precio'] == '') {
-        alert("No Puede estar vacío el precio");
-        return false;
-      }
-      return true;
     }
+    //******************************************************* 
+
+      })
+    
 
     // otras funciones
     // Selecciona un determinado elemento de un control HTML 'select'
@@ -248,5 +242,7 @@
       }
     }
 
+
   });    
 </script>
+
