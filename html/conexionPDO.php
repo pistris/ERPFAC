@@ -9,7 +9,7 @@
         private $clave="RZIZqzC0eIuZ901QyzPA";
         
         public function __construct() {
-        }
+        } 
             
         public function conectarBase(){
             try {
