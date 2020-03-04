@@ -461,7 +461,7 @@
         //******************************************************* 
 
         function RecolectarDatosFormulario() {
-            if ($('#chActivo').val()) {
+            if ($('#chActivo').prop("checked")) {
                 activo = 1
             } else {
                 activo = 0
