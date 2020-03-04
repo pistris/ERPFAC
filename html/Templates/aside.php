@@ -158,7 +158,7 @@
                                                     <a class="nav-link" href="CatalogoEmpresas.php">Catalo de Empresas</a>
                                                 </li>
                                                 <li class="nav-item active">
-                                                    <a class="nav-link" href="#">Catalo de Franquicias</a>
+                                                    <a class="nav-link" href="CatalogoFranquicias.php">Catalo de Franquicias</a>
                                                 </li>
                                                 <li class="nav-item active">
                                                     <a class="nav-link" href="#">Catalo de Usuarios</a>
@@ -191,11 +191,11 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#prod_drp">
+                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#prod_cli">
                             <i class="fa fa-diamond" aria-hidden="true"></i>
                             <span class="nav-link-text">Clientes</span>
                         </a>
-                        <ul id="prod_drp" class="nav flex-column collapse collapse-level-1">
+                        <ul id="prod_cli" class="nav flex-column collapse collapse-level-1">
                             <li class="nav-item">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
