@@ -211,33 +211,8 @@
     }
     //******************************************************* 
 
-    function RecolectarDatosFormulario() {
-      producto = {
-        codigo: $('#Codigo').val(),
-        descripcion: $('#Descripcion').val(),
-        precio: $('#Precio').val(),
-        codigocategoria: $('#CodigoCategoria').val()
-      };
-    }
-
-    function LimpiarFormulario() {
-      $('#Codigo').val('');
-      $('#Descripcion').val('');
-      $('#Precio').val('');
-      $('#CodigoCategoria').val('');
-    }
-
-    function EntradaFormularioCorrecto() {
-      if (producto['descripcion'] == '') {
-        alert("No Puede estar vacía la descripción");
-        return false;
-      }
-      if (producto['precio'] == '') {
-        alert("No Puede estar vacío el precio");
-        return false;
-      }
-      return true;
-    }
+      })
+    
 
     // otras funciones
     // Selecciona un determinado elemento de un control HTML 'select'
@@ -248,5 +223,5 @@
       }
     }
 
-  });    
+  
 </script>
