@@ -100,6 +100,15 @@
                             <input type="text" id="txtCP" class="form-control" placeholder="" required>
                         </div>
                     </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label>Régimen Fiscal*</label>
+                            <select class="form-control" name="selRegimen" id="selRegimen" required>
+                                </select>
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>Email</label>
@@ -154,6 +163,7 @@
         var empresa;
         MostrarCategorias();
         CargarEstados();
+        CargarRegimenFiscal()
 
         //Boton que vuelve a la pÃ¡gina principal
         $('#btnFinalizar').click(function() {
@@ -193,7 +203,7 @@
             empresa = {
                 intEmpresa: $("#intEmpresaBorrar").val()
             }
-
+            
             if(!validarBorrar(empresa)){
                 cerrarAlert()
 
@@ -410,6 +420,34 @@
             });
         }
 
+        function CargarRegimenFiscal() {
+            $.ajax({
+                type: 'GET',
+                url: 'Modulos/Empresas/ProEmpresas.php?accion=regimenfiscal',
+                success: function(respons) {
+                    let filas = '';
+                    let x = 0;
+                    for (let regimen of respons) {
+                        if (x == 0) {
+                            filas += '<option value="">Seleccionar</option>';
+                            x++;
+                        }
+                        filas += '<option value="' + regimen.intRegimenFiscal + '">' + regimen.varDescripcion + '</option>';
+                    }
+                    $('#selRegimen').html(filas);
+                },
+                error: function() {
+                    $("#ModalEditar").modal('hide');
+                    $('#divMensajeError').show()
+                    $('#lblMensajeError').html('No se pueden recuperar los datos')
+                    setTimeout(function() {
+                        $('#progressbar').hide();
+                        $('#divMensajeError').hide()
+                    }, 3000);
+                }
+            });
+        }
+
         function RecuperarEmpresa(accion) {
             $.ajax({
                 type: 'POST',
@@ -436,11 +474,12 @@
                         $("#chActivo").prop("checked", true);
                     }
                     $('#chActivo').val(datos[0]['bitActivo']);
-                    $('#txtNumExterior').val(datos[0]['varNumeroInterior']);
-                    $('#txtNumInterior').val(datos[0]['varNumeroExterior']);
+                    $('#txtNumExterior').val(datos[0]['varNumeroExterior']);
+                    $('#txtNumInterior').val(datos[0]['varNumeroInterior']);
                     $('#txtCP').val(datos[0]['intCodigoPostal']);
 
                     selectItemByValue(document.getElementById('selEstado'), datos[0]['intEstado']);
+                    selectItemByValue(document.getElementById('selRegimen'), datos[0]['intRegimenFiscal']);
                     CargarCiudades(datos[0]['intEstado'], datos[0]['intCiudad'])
                 },
                 error: function() {
@@ -475,10 +514,11 @@
                 varTelefono: $('#txtTelefono').val(),
                 varEmail: $('#txtEmail').val(),
                 bitActivo: activo,
-                varNumeroInterior: $('#txtNumExterior').val(),
-                varNumeroExterior: $('#txtNumInterior').val(),
+                varNumeroInterior: $('#txtNumInterior').val(),
+                varNumeroExterior: $('#txtNumExterior').val(),
                 intCodigoPostal: $('#txtCP').val(),
-                intCiudad: $('#selCiudad').val()
+                intCiudad: $('#selCiudad').val(),
+                intRegimenFiscal: $('#selRegimen').val()
             };
         }
 
@@ -499,6 +539,7 @@
             let filas = '<option value="">Seleccionar</option>';
             $('#selCiudad').html(filas);
             CargarEstados();
+            CargarRegimenFiscal()
             $("#selCiudad").prop("disabled", true);
 
         }
@@ -540,6 +581,11 @@
                 MensajeValidacion(Mensaje)
                 return false;
             }
+            if (empresa['intRegimenFiscal'] == '') {
+                Mensaje = 'Régimen Fiscal'
+                MensajeValidacion(Mensaje)
+                return false;
+            }
             return true;
         }
 
@@ -569,19 +615,24 @@
 
 
         function validarBorrar(empresa) {
+            var resultado = false;
             $.ajax({
+                async: false,
                 type: 'POST',
                 url: 'Modulos/Empresas/ProEmpresas.php?accion=validaBorrarEmpresa',
                 data: empresa,
+
                 success: function(datos) {
+                    //console.log(datos[0]['Franquicias'])
                     if(datos[0]['Franquicias']>0){
-                        return false
+                        resultado = false;
                     }else{
-                        return true
+                        resultado = true;
                     }
 
                 },
             });
+            return resultado;
         }
 
 
