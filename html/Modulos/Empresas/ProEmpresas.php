@@ -18,6 +18,9 @@ switch ($_GET['accion']) {
         echo json_encode($resultado);
         break;
     case 'agregar':
+        $numInterior = $_POST['varNumeroInterior']== '' ? 'NULL' : "'".$_POST['varNumeroInterior']."'";
+        $telefono = $_POST['varTelefono']== '' ? 'NULL' : "'".$_POST['varTelefono']."'";
+        $email = $_POST['varEmail']== '' ? 'NULL' : "'".$_POST['varEmail']."'";
         $sql = $conexion->prepare("INSERT INTO tCatEmpresa (
                                             varNombreComercial, 
                                             varRazonSocial, 
@@ -29,20 +32,22 @@ switch ($_GET['accion']) {
                                             varNumeroInterior, 
                                             varNumeroExterior, 
                                             intCodigoPostal, 
-                                            intCiudad
+                                            intCiudad,
+                                            intRegimenFiscal
                                         )
                                     VALUES(
                                         '$_POST[varNombreComercial]', 
                                         '$_POST[varRazonSocial]', 
                                         '$_POST[varRFC]', 
                                         '$_POST[varDireccion]', 
-                                        '$_POST[varTelefono]', 
-                                        '$_POST[varEmail]', 
+                                        $telefono, 
+                                        $email, 
                                         $_POST[bitActivo], 
-                                        '$_POST[varNumeroInterior]', 
+                                        $numInterior, 
                                         '$_POST[varNumeroExterior]', 
                                         $_POST[intCodigoPostal], 
-                                        $_POST[intCiudad]
+                                        $_POST[intCiudad],
+                                        $_POST[intRegimenFiscal]
                                     )");
         $respuesta = $sql->execute();
         echo json_encode($respuesta);
@@ -63,23 +68,29 @@ switch ($_GET['accion']) {
         break;
     case 'borrar':
         //echo "DELETE FROM tCatEmpresa WHERE intEmpresa=".$_POST['intEmpresa'];
-        $sql = $conexion->prepare("DELETE FROM tCatEmpresa11 WHERE intEmpresa=".$_POST['intEmpresa']);
+        $sql = $conexion->prepare("DELETE FROM tCatEmpresa WHERE intEmpresa=".$_POST['intEmpresa']);
         $respuesta = $sql->execute();
         echo json_encode($respuesta);
         break;
     case 'modificar':
+        $numInterior = $_POST['varNumeroInterior']== '' ? 'NULL' : "'".$_POST['varNumeroInterior']."'";
+        $telefono = $_POST['varTelefono']== '' ? 'NULL' : "'".$_POST['varTelefono']."'";
+        $email = $_POST['varEmail']== '' ? 'NULL' : "'".$_POST['varEmail']."'";
         $sql = $conexion->prepare("UPDATE tCatEmpresa SET
                                         varNombreComercial = '$_POST[varNombreComercial]',
                                         varRazonSocial = '$_POST[varRazonSocial]',
                                         varRFC = '$_POST[varRFC]', 
                                         varDireccion = '$_POST[varDireccion]', 
-                                        varTelefono = '$_POST[varTelefono]',
-                                        varEmail = '$_POST[varEmail]', 
+                                        varTelefono = $telefono,
+                                        varEmail = $email, 
                                         bitActivo = $_POST[bitActivo], 
-                                        varNumeroInterior = '$_POST[varNumeroInterior]', 
+                                        varNumeroInterior = $numInterior, 
                                         varNumeroExterior = '$_POST[varNumeroExterior]', 
                                         intCodigoPostal = $_POST[intCodigoPostal], 
-                                        intCiudad = $_POST[intCiudad] WHERE intEmpresa=".$_POST['intEmpresa']);
+                                        intCiudad = $_POST[intCiudad],
+                                        intRegimenFiscal = $_POST[intRegimenFiscal] 
+                                    WHERE intEmpresa=".$_POST['intEmpresa']
+                                    );
         $respuesta = $sql->execute();
         echo json_encode($respuesta);
         break;
@@ -96,6 +107,15 @@ switch ($_GET['accion']) {
                                     tCatCiudad
                                 WHERE
                                     intEstado =". $_POST['intEstado']);
+        $sql->execute();
+        $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($resultado);
+        break;
+    case 'regimenfiscal':
+        $sql = $conexion->prepare("SELECT 
+                                    intRegimenFiscal, varDescripcion
+                                FROM
+                                    tCatRegimenFiscal");
         $sql->execute();
         $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($resultado);
