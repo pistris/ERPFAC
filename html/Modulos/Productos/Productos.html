@@ -1,50 +1,75 @@
-<div class="container">
-  <h1>Administracion de Productos</h1>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Código</th>
-        <th>Descripcion</th>
-        <th>Categoria</th>
-        <th class="text-right">Precio</th>
-        <th class="text-right">Edición</th>
-      </tr>
-    </thead>
-    <tbody id="datos">
-    </tbody>
-  </table>
-  <button type="button" id="btnAgregar" class="btn btn-success">Agregar</button>
-  <hr>
-  <button type="button" id="btnFinalizar" class="btn btn-success">Finalizar</button>
+
+<!-- Container -->
+<div class="progress progress-bar-xs mb-10">
+  <div class="progress-bar bg-success w-25" name="progressbar" id="progressbar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
+<div class="alert alert-danger" id="divMensajeError" role="alert" style="text-align: center; display: none;">
+  <label id="lblMensajeError" style="color: #8b0c12;"></label>
+</div>
+<div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+          <section class="hk-sec-wrapper">
+              <h5 class="hk-sec-title">Administracion de Productos</h5>
+              <div class="row">
+                  <div class="col-sm">
+                      <div class="table-wrap">
+                          <table id="datable_3" class="table table-hover w-100 display">
+                              <thead>
+                                  <tr>
+                                      <th>Codigo</th>
+                                      <th>Descripcion</th>
+                                      <th>Categoria</th>
+                                      <th>Precio</th>
+                                      <th>Edición</th>
+                                      <th colspan="2"></th>
+                                  </tr>
+                              </thead>
+                              <tbody id="datos">
+
+                              </tbody>
+                          </table>
+                          <div>
+                              <button type="button" id="btnAgregar" class="btn btn-success">Nuevo Producto</button>
+                              <!--<button type="button" id="btnFinalizar" class="btn btn-success">Finalizar</button>-->
+                          </div>
+
+                      </div>
+                  </div>
+              </div>
+          </section>
+      </div>
+  </div>
 
 <!-- Modal(Agregar, modificar y borrar) -->
 <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+        <div class="alert alert-danger" id="divMensajeValidacion" role="alert" style="text-align: center; display: none;">
+          <label id="lblMensajeValidacion" style="color: #8b0c12;"></label>
+      </div>
         <input type="hidden" id="Codigo" name="Codigo">
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label>Descripción:</label>
+            <label>Descripción*</label>
             <input type="text" id="Descripcion" class="form-control" placeholder="">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label>Precio:</label>
+            <label>Precio*</label>
             <input type="number" id="Precio" class="form-control" placeholder="">
           </div>
         </div>
 
         <div class="form-group">
-          <label>Categoría:</label>
+          <label>Categoría*</label>
           <select class="form-control" id="CodigoCategoria">
           </select>
         </div>
@@ -53,7 +78,7 @@
       <div class="modal-footer">
         <button type="button" id="btnConfirmarAgregar" class="btn btn-success">Agregar</button>
         <button type="button" id="btnModificar" class="btn btn-success">Modificar</button>
-        <button type="button" id="btnBorrar" class="btn btn-success">Borrar</button>
+        <!-- <button type="button" id="btnBorrar" class="btn btn-success">Borrar</button> -->
         <button type="button" data-dismiss="modal" class="btn btn-success">Cancelar</button>
       </div>
     </div>
@@ -61,24 +86,23 @@
 </div>
 
 <!-- ModalConfirmarCancelar -->
-<div class="modal fade" id="ModalConfirmarBorrar" tabindex="-1" role="dialog">
-  <div class="modal-dialog" style="max-width: 600px" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1>Realmente quiere borrarlo?</h1>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="btnConfirmarBorrado" class="btn btn-success">Confirmar</button>
-        <button type="button" data-dismiss="modal" class="btn btn-success">Cancelar</button>
-      </div>
-    </div>
-  </div>
+<div class="alert alert-warning alert-wth-icon alert-dismissible fade" id="alertBorrar" style="position:absolute; right: 0px; top: 50px;" role="alert">
+  <span class="alert-icon-wrap"><i class="zmdi zmdi-alert-circle-o"></i></span>
+  <h4 class="alert-heading">Este movimiento es permante.</h4>
+  ¿Desea borrar el producto?
+  <br>
+  <input type="hidden" id="intProductoBorrar">
+  <button class="btn btn-secondary mt-20 mr-5" class="close" onclick="cerrarAlert()">Cancelar</button>
+  <button class="btn btn-primary mt-20" id="btnConfirmarBorrado">Aceptar</button>
+  <button type="button" class="close" onclick="cerrarAlert()">
+      <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 
 <script>
+    function cerrarAlert() {
+        $("#alertBorrar").removeClass('show')
+    }
   document.addEventListener("DOMContentLoaded", function () {
 
     var producto;
@@ -89,11 +113,14 @@
     $('#btnFinalizar').click(function () {
       window.location = 'dashboard.php';
     });
-
+    function GuardarProducto() {
+            RecolectarDatosFormulario();
+            $("#ModalEditar").modal('hide');
+            EnviarInformacion("agregar");
+        }
     //Boton que muestra el diálogo de agregar
     $('#btnAgregar').click(function () {
       LimpiarFormulario();
-      $('#btnConfirmarAgregar').prop("disabled", false);
       $('#btnConfirmarAgregar').show();
       $('#btnModificar').hide();
       $('#btnBorrar').hide();
@@ -114,12 +141,13 @@
       $("#ModalConfirmarBorrar").modal();
     });
 
-    $('#btnConfirmarBorrado').click(function () {
-      $("#ModalConfirmarBorrar").modal('hide');
-      RecolectarDatosFormulario();
-      $("#ModalEditar").modal('hide');
-      EnviarInformacion("borrar");
-    });
+    $('#btnConfirmarBorrado').click(function() {
+            datFormulario = {
+                intFranquicia: $("#intProductoBorrar").val()
+            }
+            cerrarAlert()
+            EnviarInformacion("borrar");
+        });
 
     $('#btnModificar').click(function () {
       RecolectarDatosFormulario();
@@ -135,14 +163,39 @@
         type: 'GET',
         url: 'Modulos/Productos/ProProductos.php?accion=listar',
         success: function (productos) {
+            $('#progressbar').removeClass('w-25');
+            $('#progressbar').addClass('w-100');
           let filas = '';
           for (let producto of productos) {
-            filas += '<tr><td>' + producto.codigo + '</td><td>' + producto.descripcion + '</td><td>' + producto.descripcioncategoria + '</td><td>' + producto.precio + '</td>';
-            filas += '<td><a class="btn btn-primary botoneditar" role="button" href="#" data-codigo="' + producto.codigo + '">Edita?</a> </td></tr>';
+            filas += `
+                      <tr>
+                      <td>` + producto.codigo + `</td>
+                      <td>` + producto.descripcion + `</td>
+                      <td>` + producto.descripcioncategoria + `</td>
+                      <td>` + producto.precio + `</td>`
+            filas += `<td> 
+                          <button class="btn btn-icon btn-icon-circle btn-secondary btn-icon-style-3 botonEditar" data-codigo="` +  producto.codigo + `">
+                            <span class="btn-icon-wrap"><i class="fa fa-pencil"></i></span>
+                                        </button>
+                                    
+                                        <button class="btn btn-icon btn-icon-circle btn-info btn-icon-style-3 botonBorrar" data-codigo="` +  producto.codigo + `">
+                                            <span class="btn-icon-wrap"><i class="icon-trash"></i></span>
+                                        </button>
+                        </td>
+                        </tr>`
           }
+          setTimeout(function() {
+                        $('#progressbar').hide();
+                    }, 3000);
+                   
+
           $('#datos').html(filas);
           //Boton que muestra el diálogo de modificar y borrar
-          $('.botoneditar').click(function () {
+          $('.botonEditar').click(function () {
+            $('#progressbar').removeClass('w-100');
+            $('#progressbar').addClass('w-25');
+            $('#progressbar').show();
+            
             $('#Codigo').val($(this).get(0).dataset.codigo);
             RecolectarDatosFormulario();
             RecuperarProducto("recuperar");
@@ -151,15 +204,31 @@
             $('#btnBorrar').show();
             $("#ModalEditar").modal();
           });
+          $('.botonBorrar').click(function() {
+            console.log($(this).get(0).dataset.codigo)
+                        $('#intProductoBorrar').val($(this).get(0).dataset.codigo);
+                        $("#alertBorrar").addClass('show')
+                    })
 
         },
         error: function () {
-          alert("Hay un error ..");
+          $('#progressbar').removeClass('w-25');
+                    $('#progressbar').addClass('w-100');
+                    $("#ModalEditar").modal('hide');
+                    $('#divMensajeError').show()
+                    $('#lblMensajeError').html('No se pueden recuperar los datos')
+                    setTimeout(function() {
+                        $('#progressbar').hide();
+                        $('#divMensajeError').hide()
+                    }, 3000);
         }
       });
     }
 
     function CargarCategorias() {
+      $('#progressbar').removeClass('w-100');
+            $('#progressbar').addClass('w-25');
+            $('#progressbar').show();
       $.ajax({
         type: 'GET',
         url: 'Modulos/Productos/ProProductos.php?accion=listarcategorias',
@@ -181,15 +250,53 @@
     //Funciones AJAX para enviar y recuperar datos del servidor
     //******************************************************* 
     function EnviarInformacion(accion) {
+      $('#progressbar').removeClass('w-100');
+            $('#progressbar').addClass('w-25');
+            $('#progressbar').show();
       $.ajax({
         type: 'POST',
         url: 'Modulos/Productos/ProProductos.php?accion=' + accion,
         data: producto,
         success: function (msg) {
           MostrarProductos();
+          if (!msg) {
+                        let mensaje
+                        if (accion == 'agregar') {
+                            mensaje = 'Guardar'
+                        } else if (accion == 'borrar') {
+                            mensaje = 'Borrar'
+                        } else if (accion == 'modificar') {
+                            mensaje = 'Actualizar'
+                        } else {
+                            mensaje = 'realizar la acción en'
+                        }
+                        $("#ModalEditar").modal('hide');
+                        $('#divMensajeError').show()
+                        $('#lblMensajeError').html('No se pueden ' + mensaje + ' la empresa')
+                        setTimeout(function() {
+                            $('#progressbar').hide();
+                            $('#divMensajeError').hide()
+                        }, 3000);
+                    }
         },
         error: function () {
-          alert("Hay un error ..");
+          let mensaje
+                    if (accion == 'agregar') {
+                        mensaje = 'Guardar'
+                    } else if (accion == 'borrar') {
+                        mensaje = 'Borrar'
+                    } else if (accion == 'modificar') {
+                        mensaje = 'Actualizar'
+                    } else {
+                        mensaje = 'realizar la acción en'
+                    }
+                    $("#ModalEditar").modal('hide');
+                    $('#divMensajeError').show()
+                    $('#lblMensajeError').html('No se pueden ' + mensaje + ' la empresa')
+                    setTimeout(function() {
+                        $('#progressbar').hide();
+                        $('#divMensajeError').hide()
+                    }, 3000);
         }
       });
     }
@@ -200,15 +307,28 @@
         url: 'Modulos/Productos/ProProductos.php?accion=' + accion,
         data: producto,
         success: function (datos) {
+          $('#progressbar').removeClass('w-25');
+          $('#progressbar').addClass('w-100');
+                    setTimeout(function() {
+                        $('#progressbar').hide();
+            }, 3000);
           $('#Descripcion').val(datos[0]['descripcion']);
           $('#Precio').val(datos[0]['precio']);
           selectItemByValue(document.getElementById('CodigoCategoria'), datos[0]['codigocategoria']);
         },
         error: function () {
-          alert("Hay un error ..");
+          $('#progressbar').removeClass('w-25');
+                    $('#progressbar').addClass('w-100');
+                    $("#ModalEditar").modal('hide');
+                    $('#divMensajeError').show()
+                    $('#lblMensajeError').html('No se pueden recuperar los datos')
+                    setTimeout(function() {
+                        $('#progressbar').hide();
+                        $('#divMensajeError').hide()
+                    }, 3000);
+                    //alert("Hay un error ..");
         }
       });
-
     }
     //******************************************************* 
 
@@ -226,12 +346,29 @@
       $('#Descripcion').val('');
       $('#Precio').val('');
       $('#CodigoCategoria').val('');
-
     }
-    //******************************************************* 
 
-      })
-    
+    function EntradaFormularioCorrecto() {
+      let Mensaje = ''
+      if (producto['descripcion'] == '') {
+        Mensaje = 'descripcion'
+        MensajeValidacion(Mensaje)
+        return false;
+      }
+      if (producto['precio'] == '') {
+        Mensaje = 'precio'
+        MensajeValidacion(Mensaje)
+        return false;
+      }
+      return true;
+    }
+    function MensajeValidacion(mensaje) {
+            $('#divMensajeValidacion').show()
+            $('#lblMensajeValidacion').html('El campo ' + mensaje + ' no puede estar vacio.')
+            setTimeout(function() {
+                $('#divMensajeValidacion').hide()
+            }, 3000);
+        }
 
     // otras funciones
     // Selecciona un determinado elemento de un control HTML 'select'
@@ -242,7 +379,5 @@
       }
     }
 
-
   });    
 </script>
-
