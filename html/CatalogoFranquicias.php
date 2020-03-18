@@ -27,16 +27,16 @@ Contact: https://hencework.ticksy.com/
         <div class="hk-pg-wrapper">
 
 
-        <?php include('Modulos/Empresas/Franquicias.html'); ?>
+            <?php include('Modulos/Empresas/Franquicias.html'); ?>
            
 
+            <!-- Footer -->
+            <?php include('Templates/footer.php'); ?>
+            <!-- /Footer -->
         </div>
         <!-- /Main Content -->
 
         
-            <!-- Footer -->
-            <?php include('Templates/footer.php'); ?>
-            <!-- /Footer -->
 
     </div>
     <!-- /HK Wrapper -->

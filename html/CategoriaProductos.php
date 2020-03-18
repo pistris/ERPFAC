@@ -21,17 +21,15 @@
         <!-- Main Content -->
         <div class="hk-pg-wrapper">
 
-        <?php include('Modulos/Productos/CategoriaProductos.html'); ?>
-        
-           
+            <?php include('Modulos/Productos/CategoriaProductos.html'); ?>
 
+            <!-- Footer -->
+            <?php include('Templates/footer.php'); ?>
+            <!-- /Footer -->
         </div>
         <!-- /Main Content -->
 
         
-            <!-- Footer -->
-            <?php include('Templates/footer.php'); ?>
-            <!-- /Footer -->
 
     </div>
     <!-- /HK Wrapper -->

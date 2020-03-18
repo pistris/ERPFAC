@@ -5,6 +5,10 @@
 <div class="alert alert-danger" id="divMensajeError" role="alert" style="text-align: center; display: none;">
     <label id="lblMensajeError" style="color: #8b0c12;"></label>
 </div>
+<div class="alert alert-success" id="divMensajeExito" role="alert" style="text-align: center; display: none;">
+    <label id="lblMensajeExito" style="color: #05592b;"></label>
+</div>
+
 <div class="container">
 
     <!-- Row -->
@@ -15,7 +19,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="table-wrap">
-                            <table id="datable_3" class="table table-hover w-100 display">
+                            <table id="datable_1" class="table table-hover w-100 display">
                                 <thead>
                                     <tr>
                                         <th>id</th>
@@ -41,6 +45,13 @@
         </div>
     </div>
 
+
+
+
+
+
+
+
     <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -50,90 +61,134 @@
                     </button>
                 </div>
 
-                <!--<form class="smart-form" name="form1">-->
                 <div class="modal-body">
-                    <div class="alert alert-danger" id="divMensajeValidacion" role="alert" style="text-align: center; display: none;">
-                        <label id="lblMensajeValidacion" style="color: #8b0c12;"></label>
-                    </div>
+
                     <input type="hidden" id="intEmpresa">
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>Nombre*</label>
-                            <input type="text" id="txtNombre" class="form-control" placeholder="" required>
+                            <input type="text" name="txtNombre" id="txtNombre" class="form-control" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Campo Obligatorio
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Razón Social*</label>
-                            <input type="text" id="txtRazon" class="form-control" placeholder="" required>
+                            <input type="text" name="txtRazon" id="txtRazon" class="form-control" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Campo Obligatorio
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label>RFC*</label>
-                            <input type="text" id="txtRFC" class="form-control" placeholder="" required>
+                            <input type="text" name="txtRFC" id="txtRFC" class="form-control" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Campo Obligatorio
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>Estado*</label>
-                            <select class="form-control selEstado" name="selEstado" id="selEstado" required>
-                                </select>
+                            <select class="form-control selEstado" name="selEstado" id="selEstado" required></select>
+                            <div class="invalid-feedback">
+                                Campo Obligatorio
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Ciudad*</label>
-                            <select class="form-control selCiudad" name="selCiudad" id="selCiudad" disabled required>
-                                </select>
+                            <select class="form-control selCiudad" name="selCiudad" id="selCiudad" disabled required></select>
+                            <div class="invalid-feedback">
+                                Campo Obligatorio
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Dirección*</label>
-                            <input type="text" id="txtDireccion" class="form-control" placeholder="" required>
+                            <input type="text" name="txtDireccion" id="txtDireccion" class="form-control" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Campo Obligatorio
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             <label>Num. Exterior*</label>
-                            <input type="text" id="txtNumExterior" class="form-control" placeholder="" required>
+                            <input type="text" name="txtNumExterior" id="txtNumExterior" class="form-control" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Campo Obligatorio
+                            </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label>Num. Interior</label>
-                            <input type="text" id="txtNumInterior" class="form-control" placeholder="">
+                            <input type="text" name="txtNumInterior" id="txtNumInterior" class="form-control" placeholder="">
                         </div>
                         <div class="form-group col-md-3">
                             <label>C.P*</label>
-                            <input type="text" id="txtCP" class="form-control" placeholder="" required>
+                            <input type="text" name="txtCP" id="txtCP" class="form-control" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Campo Obligatorio
+                            </div>
                         </div>
                     </div>
-
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>Régimen Fiscal*</label>
-                            <select class="form-control" name="selRegimen" id="selRegimen" required>
-                                </select>
+                            <select class="form-control" name="selRegimen" id="selRegimen" required></select>
+                            <div class="invalid-feedback">
+                                Campo Obligatorio
+                            </div>
                         </div>
                     </div>
-
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Logo</label>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="form-group mb-0">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput" id="iconFile" name="iconFile">
+                                            <div class="form-control text-truncate" data-trigger="fileinput">
+                                                <i class="glyphicon glyphicon-file fileinput-exists"></i>
+                                                <span class="fileinput-filename" id="lblLogo" name="lblLogo"></span>
+                                                <input type="hidden" id="hlblLogo">
+                                            </div>
+                                            <span class="input-group-append">
+                                                <span class=" btn btn-primary btn-file"><span class="fileinput-new">Seleccionar</span><span class="fileinput-exists">Cambiar</span>
+                                            <input type="file" accept="image/png, image/jpeg" name="imgLogo" id="imgLogo">
+                                            </span>
+                                            <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Borrar</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>Email</label>
-                            <input type="text" id="txtEmail" class="form-control" placeholder="">
+                            <input type="text" name="txtEmail" id="txtEmail" class="form-control" placeholder="">
                         </div>
                         <div class="form-group col-md-4">
                             <label>Teléfono</label>
-                            <input type="text" id="txtTelefono" class="form-control" placeholder="">
+                            <input type="text" name="txtTelefono" id="txtTelefono" class="form-control" placeholder="">
                         </div>
                         <div class="form-group col-md-4">
                             <label>Activo</label>
                             <div class="custom-control custom-checkbox checkbox-teal">
-                                <input type="checkbox" class="custom-control-input" id="chActivo" checked>
+                                <input type="checkbox" class="custom-control-input" name="chActivo" id="chActivo" checked>
                                 <label class="custom-control-label" for="chActivo"></label>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="submit" id="btnConfirmarAgregar" class="btn btn-success">Agregar</button>
                     <button type="button" id="btnModificar" class="btn btn-success">Modificar</button>
-                    <!--<button type="button" id="btnBorrar" class="btn btn-success">Borrar</button>-->
+
                     <button type="button" data-dismiss="modal" class="btn btn-success">Cancelar</button>
                 </div>
-                <!--</form>-->
+
             </div>
         </div>
     </div>
@@ -150,10 +205,8 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-
     <!-- /Row -->
 </div>
-
 <script>
     function cerrarAlert() {
         $("#alertBorrar").removeClass('show')
@@ -161,75 +214,12 @@
     document.addEventListener("DOMContentLoaded", function() {
 
         var empresa;
-        MostrarCategorias();
+        MostrarEmpresas();
         CargarEstados();
         CargarRegimenFiscal()
 
-        //Boton que vuelve a la pÃ¡gina principal
-        $('#btnFinalizar').click(function() {
-            window.location = '../../index.php';
-        });
-
-        //Boton que muestra el diÃ¡logo de agregar
-        function GuardarEmpresa() {
-            RecolectarDatosFormulario();
-            $("#ModalEditar").modal('hide');
-            EnviarInformacion("agregar");
-        }
-
-        $('#btnAgregar').click(function() {
-            LimpiarFormulario();
-            $('#btnConfirmarAgregar').show();
-            $('#btnModificar').hide();
-            $('#btnBorrar').hide();
-            $("#ModalEditar").modal();
-        });
-
-        $('#btnConfirmarAgregar').click(function() {
-            RecolectarDatosFormulario();
-            if (!EntradaFormularioCorrecto())
-                return;
-            $("#ModalEditar").modal('hide');
-            EnviarInformacion("agregar");
-        });
-
-        $('#btnBorrar').click(function() {
-            $("#ModalEditar").modal('hide');
-            $("#ModalConfirmarBorrar").modal();
-        });
-
-
-        $('#btnConfirmarBorrado').click(function() {
-            empresa = {
-                intEmpresa: $("#intEmpresaBorrar").val()
-            }
-            
-            if(!validarBorrar(empresa)){
-                cerrarAlert()
-
-                $('#divMensajeError').show()
-                $('#lblMensajeError').html('La empresa no puede ser borrada por que tiene uno o más franquicias asignadas.')
-                setTimeout(function() {
-                    $('#divMensajeError').hide()
-                }, 3000);
-                return
-            }
-
-            cerrarAlert()
-            EnviarInformacion("borrar");
-        });
-
-        $('#btnModificar').click(function() {
-            RecolectarDatosFormulario();
-            if (!EntradaFormularioCorrecto())
-                return;
-            $("#ModalEditar").modal('hide');
-            EnviarInformacion("modificar");
-        });
-
-        //******************************************************* 
-
-        function MostrarCategorias() {
+        /* INICIA CARGAR DATOS */
+        function MostrarEmpresas() {
             $.ajax({
                 type: 'GET',
                 url: 'Modulos/Empresas/ProEmpresas.php?accion=listar',
@@ -256,9 +246,6 @@
                                     </td>
                                 </tr>
                             `
-                            //<!--<button type="button" id="btnBorrar" class="btn btn-success">Borrar</button>-->
-                            //filas += '<tr><td>' + categoria.codigo + '</td><td>' + categoria.descripcion + '</td>';
-                            //filas += '<td><a class="btn btn-primary botoneditar" role="button" href="#" data-codigo="' + categoria.codigo + '">Edita?</a> </td></tr>';
                     }
                     setTimeout(function() {
                         $('#progressbar').hide();
@@ -266,16 +253,18 @@
                     $('#datos').html(filas);
                     //Boton que muestra el diÃ¡logo de modificar y borrar
                     $('.botonEditar').click(function() {
+                        //LimpiarFormulario()
+
+                        $('#intEmpresa').val($(this).get(0).dataset.codigo);
                         $('#progressbar').removeClass('w-100');
                         $('#progressbar').addClass('w-25');
                         $('#progressbar').show();
 
-                        $('#intEmpresa').val($(this).get(0).dataset.codigo);
-                        RecolectarDatosFormulario();
-                        RecuperarEmpresa("recuperar");
+                        RecolectarDatosFormulario('recuperar')
                         $('#btnConfirmarAgregar').hide();
                         $('#btnModificar').show();
                         $('#btnBorrar').show();
+
                         $("#ModalEditar").modal();
                     });
                     $('.botonBorrar').click(function() {
@@ -290,61 +279,6 @@
                     $("#ModalEditar").modal('hide');
                     $('#divMensajeError').show()
                     $('#lblMensajeError').html('No se pueden recuperar los datos')
-                    setTimeout(function() {
-                        $('#progressbar').hide();
-                        $('#divMensajeError').hide()
-                    }, 3000);
-                }
-            });
-        }
-
-        //Funciones AJAX para enviar y recuperar datos del servidor
-        //******************************************************* 
-        function EnviarInformacion(accion) {
-            $('#progressbar').removeClass('w-100');
-            $('#progressbar').addClass('w-25');
-            $('#progressbar').show();
-            //alert(accion)
-            $.ajax({
-                type: 'POST',
-                url: 'Modulos/Empresas/ProEmpresas.php?accion=' + accion,
-                data: empresa,
-                success: function(msg) {
-                    MostrarCategorias();
-                    if (!msg) {
-                        let mensaje
-                        if (accion == 'agregar') {
-                            mensaje = 'Guardar'
-                        } else if (accion == 'borrar') {
-                            mensaje = 'Borrar'
-                        } else if (accion == 'modificar') {
-                            mensaje = 'Actualizar'
-                        } else {
-                            mensaje = 'realizar la acción en'
-                        }
-                        $("#ModalEditar").modal('hide');
-                        $('#divMensajeError').show()
-                        $('#lblMensajeError').html('No se pueden ' + mensaje + ' la empresa')
-                        setTimeout(function() {
-                            $('#progressbar').hide();
-                            $('#divMensajeError').hide()
-                        }, 3000);
-                    }
-                },
-                error: function() {
-                    let mensaje
-                    if (accion == 'agregar') {
-                        mensaje = 'Guardar'
-                    } else if (accion == 'borrar') {
-                        mensaje = 'Borrar'
-                    } else if (accion == 'modificar') {
-                        mensaje = 'Actualizar'
-                    } else {
-                        mensaje = 'realizar la acción en'
-                    }
-                    $("#ModalEditar").modal('hide');
-                    $('#divMensajeError').show()
-                    $('#lblMensajeError').html('No se pueden ' + mensaje + ' la empresa')
                     setTimeout(function() {
                         $('#progressbar').hide();
                         $('#divMensajeError').hide()
@@ -368,6 +302,34 @@
                         filas += '<option value="' + estado.intEstado + '">' + estado.varEstado + '</option>';
                     }
                     $('#selEstado').html(filas);
+                },
+                error: function() {
+                    $("#ModalEditar").modal('hide');
+                    $('#divMensajeError').show()
+                    $('#lblMensajeError').html('No se pueden recuperar los datos')
+                    setTimeout(function() {
+                        $('#progressbar').hide();
+                        $('#divMensajeError').hide()
+                    }, 3000);
+                }
+            });
+        }
+
+        function CargarRegimenFiscal() {
+            $.ajax({
+                type: 'GET',
+                url: 'Modulos/Empresas/ProEmpresas.php?accion=regimenfiscal',
+                success: function(respons) {
+                    let filas = '';
+                    let x = 0;
+                    for (let regimen of respons) {
+                        if (x == 0) {
+                            filas += '<option value="">Seleccionar</option>';
+                            x++;
+                        }
+                        filas += '<option value="' + regimen.intRegimenFiscal + '">' + regimen.varDescripcion + '</option>';
+                    }
+                    $('#selRegimen').html(filas);
                 },
                 error: function() {
                     $("#ModalEditar").modal('hide');
@@ -419,40 +381,166 @@
                 }
             });
         }
+        /* FIN CARGAR DATOS */
 
-        function CargarRegimenFiscal() {
+        /* INICIA BOTONES*/
+        $('#btnAgregar').click(function() {
+            LimpiarFormulario();
+            $('#btnConfirmarAgregar').show();
+            $('#btnModificar').hide();
+            $('#btnBorrar').hide();
+            $("#ModalEditar").modal();
+        });
+
+        $('#btnConfirmarAgregar').click(function() {
+            if (validaForm()) {
+                $('#progressbar').removeClass('w-100');
+                $('#progressbar').addClass('w-25');
+                $('#progressbar').show();
+                RecolectarDatosFormulario('agregar')
+            }
+        });
+
+        $('#btnModificar').click(function() {
+            if (validaForm()) {
+                $('#progressbar').removeClass('w-100');
+                $('#progressbar').addClass('w-25');
+                $('#progressbar').show();
+                RecolectarDatosFormulario('modificar')
+            }
+        });
+
+        $('#btnBorrar').click(function() {
+            $("#ModalEditar").modal('hide');
+            $("#ModalConfirmarBorrar").modal();
+        });
+
+        $('#btnConfirmarBorrado').click(function() {
+            empresa = {
+                intEmpresa: $("#intEmpresaBorrar").val()
+            }
+
+            if (!validarBorrar(empresa)) {
+                cerrarAlert()
+
+                $('#divMensajeError').show()
+                $('#lblMensajeError').html('La empresa no puede ser borrada por que tiene uno o más franquicias asignadas.')
+                setTimeout(function() {
+                    $('#divMensajeError').hide()
+                }, 3000);
+                return
+            }
+
+            cerrarAlert()
+            var datosFom = new FormData()
+            datosFom.append('intEmpresa', $('#intEmpresaBorrar').val())
+            EnviarFormulario(datosFom, 'borrar')
+        });
+
+        /* FIN BOTONES*/
+
+        /* INICIA FUNCIONES GENERALES*/
+        function validaForm() {
+            if ($('#txtNombre').val() != '' &&
+                $('#txtRazon').val() != '' &&
+                $('#txtRFC').val() != '' &&
+                $('#txtDireccion').val() != '' &&
+                $('#txtNumExterior').val() != '' &&
+                $('#txtCP').val() != '' &&
+                $('#selCiudad').val() != '' &&
+                $('#selRegimen').val() != '') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function RecolectarDatosFormulario(accion) {
+            var datosFom = new FormData()
+            let imgLogo = $('#imgLogo').prop('files')[0]
+            let bitLogo = true
+
+            if (typeof(imgLogo) === 'undefined') {
+                bitLogo = false
+            }
+
+            if ($('#chActivo').prop("checked")) {
+                activo = 1
+            } else {
+                activo = 0
+            }
+            datosFom.append('intEmpresa', $('#intEmpresa').val())
+            datosFom.append('varNombreComercial', $('#txtNombre').val())
+            datosFom.append('varRazonSocial', $('#txtRazon').val())
+            datosFom.append('varRFC', $('#txtRFC').val())
+            datosFom.append('varDireccion', $('#txtDireccion').val())
+            datosFom.append('varTelefono', $('#txtTelefono').val())
+            datosFom.append('varEmail', $('#txtEmail').val())
+            datosFom.append('bitActivo', activo)
+            datosFom.append('varNumeroInterior', $('#txtNumInterior').val())
+            datosFom.append('varNumeroExterior', $('#txtNumExterior').val())
+            datosFom.append('intCodigoPostal', $('#txtCP').val())
+            datosFom.append('intCiudad', $('#selCiudad').val())
+            datosFom.append('intRegimenFiscal', $('#selRegimen').val())
+            datosFom.append('imgImagen', imgLogo)
+            datosFom.append('bitImagen', bitLogo)
+            datosFom.append('lblLogo', $('#hlblLogo').val())
+            if (accion == 'recuperar') {
+                RecuperarEmpresa(datosFom, accion)
+            } else {
+                EnviarFormulario(datosFom, accion)
+            }
+        }
+
+        function EnviarFormulario(formulario, accion) {
             $.ajax({
-                type: 'GET',
-                url: 'Modulos/Empresas/ProEmpresas.php?accion=regimenfiscal',
-                success: function(respons) {
-                    let filas = '';
-                    let x = 0;
-                    for (let regimen of respons) {
-                        if (x == 0) {
-                            filas += '<option value="">Seleccionar</option>';
-                            x++;
-                        }
-                        filas += '<option value="' + regimen.intRegimenFiscal + '">' + regimen.varDescripcion + '</option>';
-                    }
-                    $('#selRegimen').html(filas);
-                },
-                error: function() {
+                type: "POST",
+                url: "Modulos/Empresas/ProEmpresas.php?accion=" + accion,
+                data: formulario,
+                contentType: false,
+                async: false,
+                processData: false,
+                cache: false,
+                success: function(data) {
+                    $("#selCiudad").prop("disabled", false);
+                    $('#progressbar').removeClass('w-25');
+                    $('#progressbar').addClass('w-100');
                     $("#ModalEditar").modal('hide');
-                    $('#divMensajeError').show()
-                    $('#lblMensajeError').html('No se pueden recuperar los datos')
+                    LimpiarFormulario()
+
                     setTimeout(function() {
                         $('#progressbar').hide();
-                        $('#divMensajeError').hide()
                     }, 3000);
+                    MostrarEmpresas();
+                    if (!data) {
+                        TextoMensajes(accion, 0)
+                    } else {
+                        TextoMensajes(accion, 1)
+                    }
+                },
+                error: function(error) {
+                    $("#selCiudad").prop("disabled", false);
+                    $('#progressbar').removeClass('w-25');
+                    $('#progressbar').addClass('w-100');
+                    setTimeout(function() {
+                        $('#progressbar').hide();
+                    }, 3000);
+
+                    $("#ModalEditar").modal('hide');
+                    TextoMensajes(accion, 0)
                 }
             });
         }
 
-        function RecuperarEmpresa(accion) {
+        function RecuperarEmpresa(formulario, accion) {
             $.ajax({
                 type: 'POST',
                 url: 'Modulos/Empresas/ProEmpresas.php?accion=' + accion,
-                data: empresa,
+                data: formulario,
+                contentType: false,
+                async: false,
+                processData: false,
+                cache: false,
                 success: function(datos) {
                     $("#selCiudad").prop("disabled", false);
                     $('#progressbar').removeClass('w-25');
@@ -478,6 +566,19 @@
                     $('#txtNumInterior').val(datos[0]['varNumeroInterior']);
                     $('#txtCP').val(datos[0]['intCodigoPostal']);
 
+                    if (datos[0]['varLogo'] != null) {
+                        $('#iconFile').addClass('fileinput-exists')
+                        $('#iconFile').removeClass('fileinput-new')
+                        $('#lblLogo').html(datos[0]['varLogo'])
+                        $('#hlblLogo').val(datos[0]['varLogo'])
+                    } else {
+                        $('#iconFile').removeClass('fileinput-exists')
+                        $('#iconFile').addClass('fileinput-new')
+                        $('#lblLogo').html('')
+                        $('#imgLogo').val('')
+                        $('#hlblLogo').val('')
+                    }
+
                     selectItemByValue(document.getElementById('selEstado'), datos[0]['intEstado']);
                     selectItemByValue(document.getElementById('selRegimen'), datos[0]['intRegimenFiscal']);
                     CargarCiudades(datos[0]['intEstado'], datos[0]['intCiudad'])
@@ -497,29 +598,57 @@
             });
         }
 
-        //******************************************************* 
+        function TextoMensajes(accion, tipo) {
+            switch (accion) {
+                case 'agregar':
+                    if (tipo == 1) {
+                        $('#divMensajeExito').show()
+                        $('#lblMensajeExito').html('Empresa Guardar con Éxito')
 
-        function RecolectarDatosFormulario() {
-            if ($('#chActivo').prop("checked")) {
-                activo = 1
-            } else {
-                activo = 0
+                        setTimeout(function() {
+                            $('#divMensajeExito').hide()
+                        }, 3000);
+                    } else {
+                        $('#divMensajeError').show()
+                        $('#lblMensajeError').html('Error al Guardar la Empresa')
+                        setTimeout(function() {
+                            $('#divMensajeError').hide()
+                        }, 3000);
+                    }
+                    break;
+                case 'modificar':
+                    if (tipo == 1) {
+                        $('#divMensajeExito').show()
+                        $('#lblMensajeExito').html('Empresa Actualizada con Éxito')
+
+                        setTimeout(function() {
+                            $('#divMensajeExito').hide()
+                        }, 3000);
+                    } else {
+                        $('#divMensajeError').show()
+                        $('#lblMensajeError').html('Error al Actualizar la Empresa')
+                        setTimeout(function() {
+                            $('#divMensajeError').hide()
+                        }, 3000);
+                    }
+                    break;
+                case 'borrar':
+                    if (tipo == 1) {
+                        $('#divMensajeExito').show()
+                        $('#lblMensajeExito').html('La Empresa se a borrado con Éxito')
+
+                        setTimeout(function() {
+                            $('#divMensajeExito').hide()
+                        }, 3000);
+                    } else {
+                        $('#divMensajeError').show()
+                        $('#lblMensajeError').html('Error al Borrar la Empresa')
+                        setTimeout(function() {
+                            $('#divMensajeError').hide()
+                        }, 3000);
+                    }
+                    break;
             }
-            empresa = {
-                intEmpresa: $('#intEmpresa').val(),
-                varNombreComercial: $('#txtNombre').val(),
-                varRazonSocial: $('#txtRazon').val(),
-                varRFC: $('#txtRFC').val(),
-                varDireccion: $('#txtDireccion').val(),
-                varTelefono: $('#txtTelefono').val(),
-                varEmail: $('#txtEmail').val(),
-                bitActivo: activo,
-                varNumeroInterior: $('#txtNumInterior').val(),
-                varNumeroExterior: $('#txtNumExterior').val(),
-                intCodigoPostal: $('#txtCP').val(),
-                intCiudad: $('#selCiudad').val(),
-                intRegimenFiscal: $('#selRegimen').val()
-            };
         }
 
         function LimpiarFormulario() {
@@ -541,60 +670,10 @@
             CargarEstados();
             CargarRegimenFiscal()
             $("#selCiudad").prop("disabled", true);
-
-        }
-
-        function EntradaFormularioCorrecto() {
-            let Mensaje = ''
-            if (empresa['varNombreComercial'] == '') {
-                Mensaje = 'Nombre'
-                MensajeValidacion(Mensaje)
-                return false;
-            }
-            if (empresa['varRazonSocial'] == '') {
-                Mensaje = 'Razón Social'
-                MensajeValidacion(Mensaje)
-                return false;
-            }
-            if (empresa['varRFC'] == '') {
-                Mensaje = 'RFC'
-                MensajeValidacion(Mensaje)
-                return false;
-            }
-            if (empresa['varDireccion'] == '') {
-                Mensaje = 'Dirección'
-                MensajeValidacion(Mensaje)
-                return false;
-            }
-            if (empresa['varNumeroExterior'] == '') {
-                Mensaje = 'Número Exterior'
-                MensajeValidacion(Mensaje)
-                return false;
-            }
-            if (empresa['intCodigoPostal'] == '') {
-                Mensaje = 'Codigo Postal'
-                MensajeValidacion(Mensaje)
-                return false;
-            }
-            if (empresa['intCiudad'] == '') {
-                Mensaje = 'Ciudad'
-                MensajeValidacion(Mensaje)
-                return false;
-            }
-            if (empresa['intRegimenFiscal'] == '') {
-                Mensaje = 'Régimen Fiscal'
-                MensajeValidacion(Mensaje)
-                return false;
-            }
-            return true;
-        }
-
-        function MensajeValidacion(mensaje) {
-            $('#divMensajeValidacion').show()
-            $('#lblMensajeValidacion').html('El campo ' + mensaje + ' no puede estar vacio.')
-            setTimeout(function() {
-                $('#divMensajeValidacion').hide()
-            }, 3000);
+            $('#lblLogo').html('')
+            $('#iconFile').removeClass('fileinput-exists')
+            $('#iconFile').addClass('fileinput-new')
+            $('#imgLogo').val('')
         }
 
         $('#selEstado').on('change', function() {
@@ -613,7 +692,6 @@
             }
         }
 
-
         function validarBorrar(empresa) {
             var resultado = false;
             $.ajax({
@@ -623,10 +701,9 @@
                 data: empresa,
 
                 success: function(datos) {
-                    //console.log(datos[0]['Franquicias'])
-                    if(datos[0]['Franquicias']>0){
+                    if (datos[0]['Franquicias'] > 0) {
                         resultado = false;
-                    }else{
+                    } else {
                         resultado = true;
                     }
 
@@ -635,8 +712,11 @@
             return resultado;
         }
 
+        function cerrarAlert() {
+            $("#alertBorrar").removeClass('show')
+        }
 
-
+        /* FIN FUNCIONES GENERALES*/
     });
 </script>
 <!-- /Container -->
