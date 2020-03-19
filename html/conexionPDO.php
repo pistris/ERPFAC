@@ -3,10 +3,15 @@
 
         public $conexion;
         
-        private $server="bhuaagzhlgugk5u9beiw-mysql.services.clever-cloud.com";
+        /*private $server="bhuaagzhlgugk5u9beiw-mysql.services.clever-cloud.com";
         private $base="bhuaagzhlgugk5u9beiw";
         private $usuario="uqmqkkwu33ddsizp";
-        private $clave="RZIZqzC0eIuZ901QyzPA";
+        private $clave="RZIZqzC0eIuZ901QyzPA";*/
+        
+        private $server="162.241.60.246";
+        private $base="decomaic_sistemaERP";
+        private $usuario="decomaic_ERP";
+        private $clave="g=NXn)@;N2db";
         
         public function __construct() {
         } 

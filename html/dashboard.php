@@ -26,17 +26,14 @@ Contact: https://hencework.ticksy.com/
         <!-- Main Content -->
         <div class="hk-pg-wrapper">
 
-      
-        
-           
 
+            <!-- Footer -->
+            <?php include('Templates/footer.php'); ?>
+            <!-- /Footer -->
         </div>
         <!-- /Main Content -->
 
         
-            <!-- Footer -->
-            <?php include('Templates/footer.php'); ?>
-            <!-- /Footer -->
 
     </div>
     <!-- /HK Wrapper -->

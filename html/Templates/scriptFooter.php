@@ -48,4 +48,13 @@
     
     <!-- Init JavaScript -->
     <script src="../dist/js/init.js"></script>
-	<script src="../dist/js/dashboard-data.js"></script>
+    <script src="../dist/js/dashboard-data.js"></script>
+        
+    <!-- Jasny-bootstrap  JavaScript -->
+    <script src="../vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+
+    <script src="../dist/js/validation-data.js"></script>
+
+    
+    
+    
