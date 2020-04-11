@@ -1,196 +1,302 @@
 <!DOCTYPE html>
+<!-- 
+Template Name: Marvin - Responsive Bootstrap 4 Admin Dashboard Template
+Author: Hencework
+Contact: https://hencework.ticksy.com/
+
+License: You must have a valid license purchased only from templatemonster to legally use the template for your project.
+-->
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>ERP</title>
+    <meta name="description" content="A responsive bootstrap 4 admin dashboard template by hencework" />
 
-  <link href="SRC/bootstrap-4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <script src="SRC/js/jquery-3.4.1.js"></script>
-  <script src="SRC/js/popper.min.js"></script>
-  <script src="SRC/bootstrap-4.3.1/js/bootstrap.min.js"></script>
-  <style>
-    body, 
-    html {
-      height: 100%;
-    }
-  </style>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+
+    <!-- Toggles CSS -->
+    <link href="../vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+    <link href="../vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/style.css" rel="stylesheet" type="text/css">
+
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+        }
+        /* Safari */
+        
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .fondoTransparente {
+            justify-content: center;
+            align-items: center;
+            /*Div que ocupa toda la pantalla*/
+            /*display: none;*/
+            display: flex;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: #000000b5;
+            z-index: 1001;
+            -moz-opacity: 0.8;
+            opacity: .80;
+            filter: alpha(opacity=80);
+        }
+        
+        .fondoOculto {
+            display: none;
+        }
+    </style>
 </head>
 
-<body>
-  <div class="container h-100">
-    <div class="row justify-content-center h-100 align-items-center">
-      <form style="border:1px solid black;padding:1rem;border-radius: 0.5rem;">
-        <div class="form-group">
-          <label for="Usuario">Nombre de usuario</label>
-          <input type="text" class="form-control" id="Usuario" required>
-        </div>
-        <div class="form-group">
-          <label for="Clave">Clave</label>
-          <input type="password" class="form-control" id="Clave" required>
-        </div>
-        <div class="form-group">
-          <button type="button" class="btn btn-primary" id="BotonLogin">Ingresar</button>
-        </div>
-        <div class="form-group">
-          <a href="#" id="NuevoUsuario">Nuevo usuario?</a>
-        </div>
-      </form>
+<body onload="VerificaSesion();">
+    <div class="fondoTransparente fondoOculto" id="fondoOculto" name="fondoOculto">
+        <div class="loader"></div>
     </div>
-  </div>
-
-  <!-- Formulario Agregar Usuario -->
-  <div class="modal fade" id="FormularioNuevoUsuario" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" id="Codigo">
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label>Nombre de usuario:</label>
-              <input type="text" id="NombreNuevo" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label>Clave:</label>
-              <input type="password" id="Clave1" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label>Repita clave:</label>
-              <input type="password" id="Clave2" class="form-control">
-            </div>
-          </div>
-
-        </div>
-        <div class="modal-footer">
-
-          <button type="button" id="BotonAgregarUsuario" class="btn btn-success">Agregar</button>
-          <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
-
-        </div>
-      </div>
+    <div class="alert alert-danger" id="divMensajeError" role="alert" style="text-align: center; display: none;">
+        <label id="lblMensajeError" style="color: #8b0c12;"></label>
     </div>
-  </div>
+    <!-- HK Wrapper -->
+    <div class="hk-wrapper">
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
+        <!-- Main Content -->
+        <div class="hk-pg-wrapper hk-auth-wrapper">
+            <!-- <header class="d-flex justify-content-end align-items-center">
+                <div class="btn-group btn-group-sm">
+                    <a href="#" class="btn btn-outline-secondary">Help</a>
+                    <a href="#" class="btn btn-outline-secondary">About Us</a>
+                </div>
+            </header> -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12 pa-0">
+                        <div class="auth-form-wrap pt-xl-0 pt-70">
+                            <div class="auth-form w-xl-30 w-lg-55 w-sm-75 w-100">
+                                <a class="auth-brand text-center d-block mb-20" href="#">ERP</a>
+                                <!-- <form> -->
+                                <h1 class="display-4 text-center mb-10">Bienvenido</h1>
+                                <p class="text-center mb-30">Introduce tus datos para ingresar</p>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Email" id="txtEmail" name="txtEmail" type="email">
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input class="form-control" placeholder="Contraseña" id="txtPassword" name="txtPassword" type="password" onkeyup="if(event.keyCode == 13) validaForm()">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><span class="feather-icon"><i data-feather="eye-off"></i></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="custom-control custom-checkbox mb-25">
+                                        <input class="custom-control-input" id="same-address" type="checkbox" checked>
+                                        <label class="custom-control-label font-14" for="same-address">Keep me logged in</label>
+                                    </div> -->
+                                <button class="btn btn-primary btn-block" type="submit" onclick="validaForm()">Entrar</button>
+                                <p class="font-14 text-center mt-15" style="display: none;" id="mensajeSesion" name="mensajeSesion">Por favor inicia Sesión</a>
+                                </p>
 
-      $('#NuevoUsuario').click(function () {
-        borrarFormulario();
-        $("#FormularioNuevoUsuario").modal();
-      });
+                                <p class="font-14 text-center mt-15">¿Olvidaste tu contraseña?<a href="#"> da click aquí</a></p>
+                                <!-- <div class="option-sep">or</div>
+                                    <div class="form-row">
+                                        <div class="col-sm-6 mb-20"><button class="btn btn-indigo btn-block btn-wth-icon"> <span class="icon-label"><i class="fa fa-facebook"></i> </span><span class="btn-text">Login with facebook</span></button></div>
+                                        <div class="col-sm-6 mb-20"><button class="btn btn-sky btn-block btn-wth-icon"> <span class="icon-label"><i class="fa fa-twitter"></i> </span><span class="btn-text">Login with Twitter</span></button></div>
+                                    </div> -->
+                                <!-- <div class="option-sep">&nbsp</div> -->
+                                <hr class="option-sep">
+                                <p class="text-center">¿Ya tienes una cuenta? <a href="registro.html">Regístrate</a></p>
+                                <!-- </form> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Main Content -->
 
-      $('#BotonAgregarUsuario').click(function () {
-        let nuevousuario = retornarNuevoUsuario();
-        if (validarEntradaDatos(nuevousuario))
-          agregarNuevoUsuario(nuevousuario);
-      });
+    </div>
 
-      $('#BotonLogin').click(function () {
-        let usuario = retornarUsuario();
-        loginUsuario(usuario);
-      });
-
-      function borrarFormulario() {
-        $('#NombreNuevo').val("");
-        $('#Clave1').val("");
-        $('#Clave2').val("");
-
-      }
-
-      function retornarNuevoUsuario() {
-        let nuevousuario = {
-          nombrenuevo: $('#NombreNuevo').val(),
-          clave1: $('#Clave1').val(),
-          clave2: $('#Clave2').val()
-        };
-        return nuevousuario;
-      }
-
-      function retornarUsuario() {
-        let usuario = {
-          usuario: $('#Usuario').val(),
-          clave: $('#Clave').val()
-        };
-        return usuario;
-      }
-
-      function validarEntradaDatos(nuevousuario) {
-        if (nuevousuario.nombrenuevo == '') {
-          alert('No puede ingresar un usuario vacío');
-          return false;
-        }
-        if (nuevousuario.clave1 == '') {
-          alert('No puede ingresar una clave vacía');
-          return false;
-        }
-        if (nuevousuario.clave1 != nuevousuario.clave2) {
-          alert('Las claves ingresadas son distintas');
-          return false;
-        }
-        return true;
-      }
-
-      function agregarNuevoUsuario(nuevousuario) {
-        $.ajax({
-          type: 'POST',
-          url: 'datosusuarios.php?accion=existe',
-          data: nuevousuario,
-          success: function (info) {
-            if (info.resultado == 'norepetido') {
-              $.ajax({
-                type: 'POST',
-                url: 'datosusuarios.php?accion=agregar',
-                data: nuevousuario,
-                success: function () {
-                  alert('se agrego el usuario');
-                  $("#FormularioNuevoUsuario").modal('hide');
-                },
-                error: function () {
-                  alert('Error');
-                }
-              });
-            } else
-              alert('Nombre de usuario existente.');
-          },
-          error: function () {
-            alert('Error');
-          }
-        });
-      }
-
-      function loginUsuario(usuario) {
-        $.ajax({
-          type: 'POST',
-          url: 'login.php',
-          data: usuario,
-          success: function (respuesta) {
-            if (respuesta == 'correcta') {
-              window.location = 'dashboard.php';
+    <script>
+        function VerificaSesion() {
+            if (getAllUrlParams().error != '') {
+                $('#mensajeSesion').show();
             }
-            else
-              alert('nombre de usuario o clave incorrecta');
-          },
-          error: function () {
-            alert('Error');
-          }
-        });
-      }
+        }
 
-    });	
-  </script>
+        /* INICIA FUNCIONES GENERALES*/
+        function validaForm() {
+            if ($('#txtEmail').val() != '' &&
+                $('#txtPassword').val() != '') {
+                //alert(1)
+                RecolectarDatosFormulario();
+            } else {
+                TextoMensajes(3)
+            }
+        }
 
+        function RecolectarDatosFormulario() {
+            var datosFom = new FormData()
+
+            datosFom.append('usuario', $('#txtEmail').val())
+            datosFom.append('password', $('#txtPassword').val())
+            loading()
+
+            $.ajax({
+                type: "POST",
+                url: "login.php",
+                data: datosFom,
+                contentType: false,
+                async: false,
+                processData: false,
+                cache: false,
+                success: function(data) {
+                    console.log(data)
+                    loadingOff()
+                    if (data == 0) {
+                        TextoMensajes(1)
+                    } else {
+                        //TextoMensajes(accion, 1)
+                        window.location = "dashboard.php";
+                    }
+                },
+                error: function(error) {
+                    TextoMensajes(0)
+                    loadingOff()
+                        // TextoMensajes(accion, 0)
+                }
+            });
+        }
+
+        function TextoMensajes(tipo) {
+            if (tipo == 1) {
+                $('#divMensajeError').show()
+                $('#lblMensajeError').html('Error Usuario o Contraseña incorrectos')
+                setTimeout(function() {
+                    $('#divMensajeError').hide()
+                }, 3000);
+            } else if (tipo == 0) {
+                $('#divMensajeError').show()
+                $('#lblMensajeError').html('Error al Iniciar Sesión')
+                setTimeout(function() {
+                    $('#divMensajeError').hide()
+                }, 3000);
+            } else if (tipo == 3) {
+                $('#divMensajeError').show()
+                $('#lblMensajeError').html('Campos Obligatorios')
+                setTimeout(function() {
+                    $('#divMensajeError').hide()
+                }, 3000);
+            }
+        }
+
+        function LimpiarFormulario() {
+            $('#intEmpresa').val('')
+            $('#txtNombre').val('')
+        }
+
+
+        function loading() {
+            $('#fondoOculto').removeClass('fondoOculto');
+        }
+
+        function loadingOff() {
+            $('#fondoOculto').addClass('fondoOculto');
+        }
+
+        function getAllUrlParams(url) {
+            var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
+            var obj = {};
+            if (queryString) {
+                queryString = queryString.split('#')[0];
+                var arr = queryString.split('&');
+
+                for (var i = 0; i < arr.length; i++) {
+                    var a = arr[i].split('=');
+                    var paramName = a[0];
+                    var paramValue = typeof(a[1]) === 'undefined' ? true : a[1];
+
+                    paramName = paramName.toLowerCase();
+                    if (typeof paramValue === 'string') paramValue = paramValue.toLowerCase();
+
+                    if (paramName.match(/\[(\d+)?\]$/)) {
+                        var key = paramName.replace(/\[(\d+)?\]/, '');
+                        if (!obj[key]) obj[key] = [];
+
+                        if (paramName.match(/\[\d+\]$/)) {
+                            var index = /\[(\d+)\]/.exec(paramName)[1];
+                            obj[key][index] = paramValue;
+                        } else {
+                            obj[key].push(paramValue);
+                        }
+                    } else {
+                        if (!obj[paramName]) {
+                            obj[paramName] = paramValue;
+                        } else if (obj[paramName] && typeof obj[paramName] === 'string') {
+                            obj[paramName] = [obj[paramName]];
+                            obj[paramName].push(paramValue);
+                        } else {
+                            // otherwise add the property
+                            obj[paramName].push(paramValue);
+                        }
+                    }
+                }
+            }
+
+            return obj;
+        }
+    </script>
+    <!-- /HK Wrapper -->
+
+    <!-- JavaScript -->
+
+    <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Slimscroll JavaScript -->
+    <script src="../dist/js/jquery.slimscroll.js"></script>
+
+    <!-- Fancy Dropdown JS -->
+    <script src="../dist/js/dropdown-bootstrap-extended.js"></script>
+
+    <!-- FeatherIcons JavaScript -->
+    <script src="../dist/js/feather.min.js"></script>
+
+    <!-- Init JavaScript -->
+    <script src="../dist/js/init.js"></script>
 </body>
 
 </html>

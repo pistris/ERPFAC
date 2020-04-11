@@ -8,6 +8,7 @@ include("../../SRC/Funciones/Funciones.php"); //eliminar_simbolos
 
 $conexion = new Conexion;
 
+
 switch ($_GET['accion']) {
     case 'listar':
         $sql = "SELECT 
@@ -152,4 +153,5 @@ switch ($_GET['accion']) {
         echo $resultado;
         break; 
 }
+
 ?>

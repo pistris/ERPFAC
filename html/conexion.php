@@ -1,4 +1,4 @@
-<?php
+<?php   
 function retornarConexion() {
     /*$server="bhuaagzhlgugk5u9beiw-mysql.services.clever-cloud.com";
     $usuario="uqmqkkwu33ddsizp";

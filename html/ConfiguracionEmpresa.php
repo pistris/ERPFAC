@@ -4,13 +4,16 @@ Template Name: Marvin - Responsive Bootstrap 4 Admin Dashboard Template
 Author: Hencework
 Contact: https://hencework.ticksy.com/-->
     <?php
-        include("SRC/Funciones/VerificarModulo.php"); //eliminar_simbolos
         session_start();
-        $exito = 1;
-        $Permiso = VerificarModulo($_SESSION['intUsuario'],1);
-        if(!$Permiso){
-            header('Location: http://192.168.1.66/ERPFAC/html/dashboard.php?varPermiso=1');
+        if(!isset($_SESSION['intUsuario'])){
+            header('Location: login.html?error=1');
         }
+        include("SRC/Funciones/VerificarModulo.php"); //eliminar_simbolos
+        // $exito = 1;
+        // $Permiso = VerificarModulo($_SESSION['intUsuario'],1);
+        // if(!$Permiso){
+        //     header('Location: http://192.168.1.66/ERPFAC/html/dashboard.php?varPermiso=1');
+        // }
     ?>
 
     <?php include('Templates/header.php'); ?>
@@ -36,7 +39,7 @@ Contact: https://hencework.ticksy.com/-->
         <div class="hk-pg-wrapper">
 
 
-            <?php include('Modulos/Empresas/Empresas.html'); ?>
+            <?php include('Modulos/Empresas/ConfiguracionEmpresas.html'); ?>
            
 
             <!-- Footer -->

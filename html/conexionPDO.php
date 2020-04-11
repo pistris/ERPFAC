@@ -33,6 +33,10 @@
             return $this->conexion;
         }
 
+        public function ultimoId() {
+            return $this->conexion->lastInsertId();
+        }
+
         //Funcion para Select
         public function selectQuery($strSelectSQL){
             if($this->conexion instanceof PDO){
@@ -75,6 +79,55 @@
             $this->conexion-> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $resultado = $this->conexion->exec($ExcutSql);
             return json_encode($resultado);
+        }
+
+        
+        //Funcion para Select (sin formato json)
+        public function Query($strSelectSQL){
+            if($this->conexion instanceof PDO){
+                $result = $this -> selectConsultaOriginal($strSelectSQL);
+                
+            }
+            else{
+                $this -> conectarBase();
+                $result = $this -> selectConsultaOriginal($strSelectSQL);
+                $this -> cerrarConexion();
+            }
+    
+            return $result;
+        }
+
+        function selectConsultaOriginal($ExcutSql){
+            $this->conexion-> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = $this->conexion->prepare($ExcutSql);
+            $sql->execute();
+            $resultado = $sql->fetchAll(PDO::FETCH_OBJ);
+            return $resultado;
+        }
+        //Funcion para Delete, Update, Insert (sin formato json)
+        public function excuteConsulta($strSelectSQL){
+            if($this->conexion instanceof PDO){
+                $result = $this -> ejecutarConsulta($strSelectSQL);
+                
+            }
+            else{
+                $this -> conectarBase();
+                $result = $this -> ejecutarConsulta($strSelectSQL);
+                $this -> cerrarConexion();
+            }
+    
+            return $result;
+        }
+
+        function ejecutarQuery($ExcutSql){
+            try{
+                $this->conexion-> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $resultado = $this->conexion->exec($ExcutSql);
+                return $resultado;
+            }
+            catch (PDOException $e){
+                echo 0;
+            }
         }
 
     }
