@@ -31,7 +31,7 @@
     <script src="../vendors/echarts/dist/echarts-en.min.js"></script>
     
 	<!-- Sparkline JavaScript -->
-    <script src="../vendors/jquery.sparkline/dist/jquery.sparkline.min.js"></script>
+    <!--<script src="../vendors/jquery.sparkline/dist/jquery.sparkline.min.js"></script>-->
 	
 	<!-- Vector Maps JavaScript -->
     <script src="../vendors/vectormap/jquery-jvectormap-2.0.3.min.js"></script>

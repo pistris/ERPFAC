@@ -1,4 +1,24 @@
+<?php
 
+session_start();
+
+require("conexionPDO.php");
+$conexion = new Conexion;
+$sql = "SELECT 
+            tbl4.*
+        FROM
+        tCatUsuario tbl1
+            INNER JOIN
+        tCatPlanPago tbl2 ON tbl2.intPlanPago = tbl1.intPlanPago
+            INNER JOIN
+        tPlanPagoModulo tbl3 ON tbl3.intPlanPago = tbl1.intPlanPago
+            INNER JOIN
+        tCatModulo tbl4 ON tbl4.intModulo = tbl3.intModulo
+        WHERE
+        tbl1.intUsuario = ".$_SESSION['intUsuario'];
+$sqlModulos = $conexion->Query($sql);
+//print_r($sqlModulos);
+?>
 
     <!-- Top Navbar -->
     <nav class="navbar navbar-expand-xl navbar-light fixed-top hk-navbar">
@@ -113,14 +133,15 @@
                             <span class="badge badge-success badge-indicator"></span>
                         </div>
                         <div class="media-body">
-                            <span>Madelyn Shane<i class="zmdi zmdi-chevron-down"></i></span>
+                            <span><?= $_SESSION['varUsuario'] ?><i class="zmdi zmdi-chevron-down"></i></span>
                         </div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
-                    <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-account"></i><span>Profile</span></a>
+                    <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-account"></i><span>Perfil</span></a>
+                    <a class="dropdown-item" href="ConfiguracionEmpresa.php"><i class="dropdown-icon zmdi zmdi-account"></i><span>Empresa</span></a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="logout.php"><i class="dropdown-icon zmdi zmdi-power"></i><span>Log out</span></a>
+                    <a class="dropdown-item" href="logout.php"><i class="dropdown-icon zmdi zmdi-power"></i><span>Cerrar Sesión</span></a>
                 </div>
             </li>
         </ul>
@@ -140,74 +161,102 @@
         <div class="nicescroll-bar">
             <div class="navbar-nav-wrap">
                 <ul class="navbar-nav flex-column">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#dash_drp">
-                            <i class="fa fa-cogs" aria-hidden="true"></i>
-                            <span class="nav-link-text">Administración</span>
-                        </a>
-                        <ul id="dash_drp" class="nav flex-column collapse collapse-level-1">
-                            <li class="nav-item">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item active">
-                                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#empresas_drp">Empresas</a>
-                                    </li>
-                                    <ul id="empresas_drp" class="nav flex-column collapse collapse-level-1">
+
+
+                <?php
+                    foreach ($sqlModulos as $key => $value) {
+                        if($value->intModulo == 1){
+                ?>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#dash_drp">
+                                <i class="<?= $value->varIcono ?>" aria-hidden="true"></i>
+                                <span class="nav-link-text"><?= $value->varNombre ?></span>
+                            </a>
+                            <ul id="dash_drp" class="nav flex-column collapse collapse-level-1">
+                                <li class="nav-item">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#empresas_drp">Empresas</a>
+                                        </li>
+                                        <ul id="empresas_drp" class="nav flex-column collapse collapse-level-1">
+                                            <li class="nav-item">
+                                                <ul class="nav flex-column">
+                                                    <li class="nav-item active">
+                                                        <a class="nav-link" href="CatalogoEmpresas.php">Catalo de Empresas</a>
+                                                    </li>
+                                                    <li class="nav-item active">
+                                                        <a class="nav-link" href="CatalogoFranquicias.php">Catalo de Franquicias</a>
+                                                    </li>
+                                                    <li class="nav-item active">
+                                                        <a class="nav-link" href="#">Catalo de Usuarios</a>
+                                                    </li>
+                                                
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php 
+                        } 
+                        if($value->intModulo == 2){                            
+                    ?> 
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#prod_drp">
+                            <i class="<?= $value->varIcono ?>" aria-hidden="true"></i>
+                                <span class="nav-link-text"><?= $value->varNombre ?></span>
+                            </a>
+                            <ul id="prod_drp" class="nav flex-column collapse collapse-level-1">
+                                <li class="nav-item">
+                                    <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <ul class="nav flex-column">
-                                                <li class="nav-item active">
-                                                    <a class="nav-link" href="CatalogoEmpresas.php">Catalo de Empresas</a>
-                                                </li>
-                                                <li class="nav-item active">
-                                                    <a class="nav-link" href="CatalogoFranquicias.php">Catalo de Franquicias</a>
-                                                </li>
-                                                <li class="nav-item active">
-                                                    <a class="nav-link" href="#">Catalo de Usuarios</a>
-                                                </li>
-                                            
-                                            </ul>
+                                            <a class="nav-link" href="CategoriaProductos.php">Categoria de Productos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="Productos.php">Productos</a>
                                         </li>
                                     </ul>
-                                
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#prod_drp">
-                            <i class="fa fa-diamond" aria-hidden="true"></i>
-                            <span class="nav-link-text">Productos</span>
-                        </a>
-                        <ul id="prod_drp" class="nav flex-column collapse collapse-level-1">
-                            <li class="nav-item">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="CategoriaProductos.php">Categoria de Productos</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="Productos.php">Productos</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#prod_cli">
-                            <i class="fa fa-diamond" aria-hidden="true"></i>
-                            <span class="nav-link-text">Clientes</span>
-                        </a>
-                        <ul id="prod_cli" class="nav flex-column collapse collapse-level-1">
-                            <li class="nav-item">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="CategoriaClientes.php">Categoria de Clientes</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="Clientes.php">Clientes</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php 
+                        } 
+                        if($value->intModulo == 3){                            
+                    ?>                         
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#prod_cli">
+                                <i class="<?= $value->varIcono ?>" aria-hidden="true"></i>
+                                <span class="nav-link-text"><?= $value->varNombre ?></span>
+                            </a>
+                            <ul id="prod_cli" class="nav flex-column collapse collapse-level-1">
+                                <li class="nav-item">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="CategoriaClientes.php">Categoria de Clientes</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="Clientes.php">Clientes</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php 
+                        } 
+                        if($value->intModulo == 4){
+                        }
+                    ?> 
+
+
+
+                
+                <?php } ?> 
+
+
+
+                    
                     <!--<li class="nav-item">
                         <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#auth_drp">
                             <span class="feather-icon"><i data-feather="zap"></i></span>
@@ -319,8 +368,8 @@
                 <button id="reset_settings" class="btn btn-primary btn-block btn-reset mt-30">Reset</button>
             </div>
         </div>
-        <img class="d-none" src="../dist/img/logo-light.png" alt="brand" />
-        <img class="d-none" src="../dist/img/logo-dark.png" alt="brand" />
+        <!--<img class="d-none" src="../dist/img/logo-light.png" alt="brand" />
+        <img class="d-none" src="../dist/img/logo-dark.png" alt="brand" />-->
     </div>
     <!-- /Setting Panel -->
 
